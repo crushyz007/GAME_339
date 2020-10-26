@@ -1,0 +1,118 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include "Player.h"
+#include "Animation.h"
+
+//static const float VIEW_HEIGHT = 1080.0f;
+//static const float VIEW_WIDE = 720.0f;
+
+/*void ResizeView(const sf::RenderWindow& window, sf::View& view)
+{
+	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+	view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
+	view.setSize(VIEW_WIDE * aspectRatio, VIEW_WIDE);
+}*/
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "SATOSHI!", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
+	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1080, 720));
+
+	//ash
+	sf::Texture playerTexture;
+	playerTexture.loadFromFile("texture/ash1.png");
+	sf::Sprite playerSprite;
+	//playerSprite.scale(4.0f, 4.0f);
+
+	Player player(&playerTexture, sf::Vector2u(5, 4), 0.4f, 180.0f);
+
+	//bg
+	sf::RectangleShape bg(sf::Vector2f(2850.0f, 954.0f));
+	sf::Texture background;
+	background.loadFromFile("texture/map1.png");
+	bg.setTexture(&background);
+
+	//time
+	float deltaTime = 0.0f; //delay‡«≈“
+	sf::Clock clock;
+
+	int animationFrame = 0;
+
+	while (window.isOpen())
+	{
+		deltaTime = clock.restart().asSeconds();
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				window.close();
+				break;
+			case sf::Event::Resized:
+				//ResizeView(window, view);
+				break;
+			case sf::Event::TextEntered:
+				break;
+			}
+		}
+
+		/*
+		if (collision2.getGlobalBounds().intersects(playerSprite.getGlobalBounds())) {
+			playerSprite.setPosition(spawnPoint);
+		}*/
+
+		player.Update(deltaTime);
+		view.setCenter(player.GetPosition());
+		if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(540.0f, 360.0f);//window
+			}
+			if (view.getCenter().y + 360.0f >= 954.0f)
+			{
+				view.setCenter(540.0f, 594.0f);//window
+			}
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 954.0f)
+			{
+				view.setCenter(540.0f, player.GetPosition().y);
+			}
+
+		}
+		if (view.getCenter().x + 540.0f >= 2850.0f)
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(2310.0f, 360.0f);//window 1248-540 collision right 
+			}
+			if (view.getCenter().y + 360.0f >= 954.0f)
+			{
+				view.setCenter(2310.0f, 594.0f);//window 1248-540
+			}
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 954.0f)
+			{
+				view.setCenter(2310.0f, player.GetPosition().y);
+			}
+		}
+		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 2850.0f)
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(player.GetPosition().x, 360.0f);
+			}
+			if (view.getCenter().y + 360.0f >= 954.0f)
+			{
+				view.setCenter(player.GetPosition().x, 594.0f);
+			}
+		}
+
+		window.clear();
+		window.setView(view);
+		window.draw(bg);
+		//window.draw(collision2);
+		player.Draw(window);
+		window.display();
+
+	}
+	return 0;
+}
