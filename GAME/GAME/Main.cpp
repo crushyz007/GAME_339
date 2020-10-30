@@ -1,8 +1,17 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
+#include "stdlib.h"
+#include <string>
+#include <sstream>
+#include <math.h>
+#include <vector>
+#include <fstream>
 #include "Player.h"
 #include "Animation.h"
 #include"Platform.h"
+#include"Item.h"
 
 //static const float VIEW_HEIGHT = 1080.0f;
 //static const float VIEW_WIDE = 720.0f;
@@ -33,11 +42,11 @@ int main()
 	bg.setTexture(&background);
 
 	//time
-	float deltaTime = 0.0f; //delay‡«≈“
+	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
 
 	int animationFrame = 0;
-	
+
 	//Platform
 	Collision playerCollision = player.GetCollision();
 	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-20.0f, 477.0f)); //left
@@ -45,8 +54,33 @@ int main()
 	Platform platform3(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, 950.0f));//down
 	Platform platform4(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(2870, 477.0f));//right
 
+	//Star
+	sf::Texture ITEM;
+	ITEM.loadFromFile("texture/cointest.png");
+	std::vector <Item> itemVector;
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 788.0f, 500.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1663.0f, 619.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1200.0f, 500.0f));
+
+	//point
+	/*int countpoint = 0;
+
+	sf::Font font;
+	font.loadFromFile("texture/ABCD.ttf");
+	std::ostringstream point;
+	sf::Text Score;
+	Score.setCharacterSize(50);
+	Score.setString(point.str());
+	Score.setFont(font);
+	Score.setFillColor(sf::Color::Red);*/
+
 	while (window.isOpen())
 	{
+		int count = player.GetPosition().x;
+
+		deltaTime = clock.restart().asSeconds();
+		sf::Vector2f pos = player.GetPosition();
+		std::cout << pos.x << ' ' << pos.y << '\n';
 		deltaTime = clock.restart().asSeconds();
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -120,14 +154,44 @@ int main()
 		platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
 
+		//point
+		/*point.str(" ");
+		point << "Score :  " << countpoint;
+		Score.setString(point.str());
+		Score.setPosition({ 418, 186 });
+		for (int i = 0; i < itemVector.size(); i++) {
+			if (itemVector[i].iscollide() == 1)
+			{
+				countpoint += 100;
+			}
+		}*/
+		for (int i = 0; i < itemVector.size(); i++)
+		{
+			itemVector[i].update(deltaTime, player);
+		}
+		/*point.str(" ");
+		point << "Score :  " << countpoint;
+		Score.setString(point.str());
+		Score.setPosition({ 418, 186 });
+		for (int i = 0; i < itemVector.size(); i++) {
+			if (itemVector[i].iscollide() == 1)
+			{
+				countpoint += 100;
+			}
+		}*/
 		window.clear();
 		window.setView(view);
 		window.draw(bg);
+		for (int i = 0; i < itemVector.size(); i++)
+		{
+			itemVector[i].draw(window);
+		}
 		//window.draw(collision2);
 		player.Draw(window);
+		//window.draw(Score);
 		window.display();
 
 	}
 	return 0;
 }
-//hello h
+//hello
