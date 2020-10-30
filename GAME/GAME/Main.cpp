@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Animation.h"
 #include"Platform.h"
+#include"Collision.h"
 #include"Item.h"
 
 //static const float VIEW_HEIGHT = 1080.0f;
@@ -63,16 +64,16 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1200.0f, 500.0f));
 
 	//point
-	/*int countpoint = 0;
+	int countpoint = 0;
 
 	sf::Font font;
 	font.loadFromFile("texture/ABCD.ttf");
 	std::ostringstream point;
 	sf::Text Score;
-	Score.setCharacterSize(50);
+	Score.setCharacterSize(30);
 	Score.setString(point.str());
 	Score.setFont(font);
-	Score.setFillColor(sf::Color::Red);*/
+	Score.setFillColor(sf::Color::White);
 
 	while (window.isOpen())
 	{
@@ -155,30 +156,21 @@ int main()
 		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
 
 		//point
-		/*point.str(" ");
-		point << "Score :  " << countpoint;
+		point.str(" ");
+		point << "Pokeball :  " << countpoint;
 		Score.setString(point.str());
-		Score.setPosition({ 418, 186 });
+		Score.setPosition({ player.GetPosition().x,player.GetPosition().y - 100 });
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
 			{
 				countpoint += 100;
 			}
-		}*/
+		}
 		for (int i = 0; i < itemVector.size(); i++)
 		{
 			itemVector[i].update(deltaTime, player);
 		}
-		/*point.str(" ");
-		point << "Score :  " << countpoint;
-		Score.setString(point.str());
-		Score.setPosition({ 418, 186 });
-		for (int i = 0; i < itemVector.size(); i++) {
-			if (itemVector[i].iscollide() == 1)
-			{
-				countpoint += 100;
-			}
-		}*/
+
 		window.clear();
 		window.setView(view);
 		window.draw(bg);
@@ -188,7 +180,7 @@ int main()
 		}
 		//window.draw(collision2);
 		player.Draw(window);
-		//window.draw(Score);
+		window.draw(Score);
 		window.display();
 
 	}

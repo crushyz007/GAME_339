@@ -12,13 +12,14 @@ public:
     ~Item();
     void update(float deltaTime, Player player);
     void draw(sf::RenderWindow& window);
-    /* int iscollide()
+
+    int iscollide()
     {
         if (Cstar == 1) {
             Cstar--;
             return 1;
         }
-    } */
+    }
     Collision GetCollider() { return Collision(body); }
 
 private:
