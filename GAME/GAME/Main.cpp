@@ -40,7 +40,10 @@ int main()
 	
 	//Platform
 	Collision playerCollision = player.GetCollision();
-	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-25.0f, 477.0f));
+	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-20.0f, 477.0f)); //left
+	Platform platform2(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, -20.0f));//top
+	Platform platform3(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, 950.0f));//down
+	Platform platform4(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(2870, 477.0f));//right
 
 	while (window.isOpen())
 	{
@@ -60,13 +63,6 @@ int main()
 				break;
 			}
 		}
-
-		//PlatformDraw
-		platform1.Draw(window);
-		/*
-		if (collision2.getGlobalBounds().intersects(playerSprite.getGlobalBounds())) {
-			playerSprite.setPosition(spawnPoint);
-		}*/
 
 		player.Update(deltaTime);
 		view.setCenter(player.GetPosition());
@@ -112,8 +108,17 @@ int main()
 				view.setCenter(player.GetPosition().x, 594.0f);
 			}
 		}
+		//PlatformDraw
+		platform1.Draw(window);
+		platform2.Draw(window);
+		platform3.Draw(window);
+		platform4.Draw(window);
+
 		//CheckCollision
 		platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
 
 		window.clear();
 		window.setView(view);
