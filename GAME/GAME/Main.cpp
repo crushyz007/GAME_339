@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Player.h"
 #include "Animation.h"
+#include"Platform.h"
 
 //static const float VIEW_HEIGHT = 1080.0f;
 //static const float VIEW_WIDE = 720.0f;
@@ -36,6 +37,10 @@ int main()
 	sf::Clock clock;
 
 	int animationFrame = 0;
+	
+	//Platform
+	Collision playerCollision = player.GetCollision();
+	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-25.0f, 477.0f));
 
 	while (window.isOpen())
 	{
@@ -56,6 +61,8 @@ int main()
 			}
 		}
 
+		//PlatformDraw
+		platform1.Draw(window);
 		/*
 		if (collision2.getGlobalBounds().intersects(playerSprite.getGlobalBounds())) {
 			playerSprite.setPosition(spawnPoint);
@@ -105,6 +112,8 @@ int main()
 				view.setCenter(player.GetPosition().x, 594.0f);
 			}
 		}
+		//CheckCollision
+		platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
 
 		window.clear();
 		window.setView(view);
