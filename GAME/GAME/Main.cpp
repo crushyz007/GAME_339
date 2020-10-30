@@ -13,6 +13,7 @@
 #include"Platform.h"
 #include"Collision.h"
 #include"Item.h"
+#include<time.h>
 
 //static const float VIEW_HEIGHT = 1080.0f;
 //static const float VIEW_WIDE = 720.0f;
@@ -56,13 +57,14 @@ int main()
 	Platform platform4(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(2870, 477.0f));//right
 
 	//Star
+	srand(time(NULL));
 	sf::Texture ITEM;
 	ITEM.loadFromFile("texture/cointest.png");
 	std::vector <Item> itemVector;
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 788.0f, 500.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand()%1000+10, 500.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1663.0f, 619.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1200.0f, 500.0f));
-
+	
 	//point
 	int countpoint = 0;
 
@@ -163,7 +165,7 @@ int main()
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
 			{
-				countpoint += 100;
+				countpoint += 1;
 			}
 		}
 		for (int i = 0; i < itemVector.size(); i++)
