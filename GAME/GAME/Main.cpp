@@ -59,11 +59,20 @@ int main()
 	//Star
 	srand(time(NULL));
 	sf::Texture ITEM;
-	ITEM.loadFromFile("texture/cointest.png");
+	ITEM.loadFromFile("texture/pokebon.png");
 	std::vector <Item> itemVector;
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand()%1000+10, 500.0f));
+	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand()%1000+10, 500.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 400.0f, 530.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 500.0f, 530.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 600.0f, 530.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 700.0f, 530.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 790.0f, 530.0f));
+	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 790.0f, 450.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 790.0f, 380.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1663.0f, 619.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1200.0f, 500.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1800.0f, 500.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1800.0f, 800.0f));
 	
 	//point
 	int countpoint = 0;
