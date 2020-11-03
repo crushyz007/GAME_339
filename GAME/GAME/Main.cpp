@@ -13,7 +13,6 @@
 #include"Platform.h"
 #include"Collision.h"
 #include"Item.h"
-#include<time.h>
 
 //static const float VIEW_HEIGHT = 1080.0f;
 //static const float VIEW_WIDE = 720.0f;
@@ -50,18 +49,24 @@ int main()
 	int animationFrame = 0;
 
 	//Platform
-	Collision playerCollision = player.GetCollision();
+	Collision playerCollision = player.GetCollision(); // (w,l)block,(w,l)move,address
 	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-20.0f, 477.0f)); //left
 	Platform platform2(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, -20.0f));//top
 	Platform platform3(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, 950.0f));//down
 	Platform platform4(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(2870, 477.0f));//right
+	//Platform platform5(nullptr, sf::Vector2f(1300.0f, 400.0f), sf::Vector2f(40.0f, 150.0f));//block1top
+	Platform platform5(nullptr, sf::Vector2f(1300.0f, 600.0f), sf::Vector2f(40.0f, 55.0f));//block1top
+	Platform platform6(nullptr, sf::Vector2f(1500.0f, 400.0f), sf::Vector2f(450.0f, 850.0f));//block2down
+	Platform platform7(nullptr, sf::Vector2f(2600.0f, 200.0f), sf::Vector2f(2800.0f, 150.0f));//mountain++
+	Platform platform8(nullptr, sf::Vector2f(400.0f, 350.0f), sf::Vector2f(1300.0f, 850.0f));//river1down
+	Platform platform9(nullptr, sf::Vector2f(480.0f, 5.0f), sf::Vector2f(2020.0f, 880.0f));//forest down
+	Platform platform10(nullptr, sf::Vector2f(690.0f, 300.0f), sf::Vector2f(1400.0f, 50.0f));//riverup1
+	//Platform platform11(nullptr, sf::Vector2f(230.0f, 500.0f), sf::Vector2f(1800.0f, 50.0f));//riverup2
 
 	//Star
-	srand(time(NULL));
 	sf::Texture ITEM;
 	ITEM.loadFromFile("texture/pokebon.png");
 	std::vector <Item> itemVector;
-	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand()%1000+10, 500.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 400.0f, 530.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 500.0f, 530.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 600.0f, 530.0f));
@@ -73,9 +78,52 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1200.0f, 500.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1800.0f, 500.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1800.0f, 800.0f));
-	
+
 	//point
 	int countpoint = 0;
+
+	//pokeball 0
+	sf::Texture poke0;
+	poke0.loadFromFile("texture/p0.png");
+	sf::RectangleShape statepoke(sf::Vector2f(200, 100));
+	statepoke.setPosition(sf::Vector2f(view.getCenter().x + 10, 130));
+	statepoke.setTexture(&poke0);
+
+	//pokeball 1
+	sf::Texture poke1;
+	poke1.loadFromFile("texture/p1.png");
+	sf::RectangleShape statepoke1(sf::Vector2f(200, 100));
+	statepoke1.setPosition(sf::Vector2f(0, 0));
+	statepoke1.setTexture(&poke1);
+
+	//pokeball 2
+	sf::Texture poke2;
+	poke2.loadFromFile("texture/p2.png");
+	sf::RectangleShape statepoke2(sf::Vector2f(200, 100));
+	statepoke2.setPosition(sf::Vector2f(0, 0));
+	statepoke2.setTexture(&poke2);
+
+	//pokeball 3
+	sf::Texture poke3;
+	poke3.loadFromFile("texture/p3.png");
+	sf::RectangleShape statepoke3(sf::Vector2f(200, 100));
+	statepoke3.setPosition(sf::Vector2f(0, 0));
+	statepoke3.setTexture(&poke3);
+
+	//pokeball 4
+	sf::Texture poke4;
+	poke4.loadFromFile("texture/p4.png");
+	sf::RectangleShape statepoke4(sf::Vector2f(200, 100));
+	statepoke4.setPosition(sf::Vector2f(0, 0));
+	statepoke4.setTexture(&poke4);
+
+	//pokeball 5
+	sf::Texture poke5;
+	poke5.loadFromFile("texture/p5.png");
+	sf::RectangleShape statepoke5(sf::Vector2f(200, 100));
+	statepoke5.setPosition(sf::Vector2f(0, 0));
+	statepoke5.setTexture(&poke5);
+
 
 	sf::Font font;
 	font.loadFromFile("texture/ABCD.ttf");
@@ -159,18 +207,43 @@ int main()
 		platform2.Draw(window);
 		platform3.Draw(window);
 		platform4.Draw(window);
+		platform5.Draw(window);
+		platform6.Draw(window);
+		platform7.Draw(window);
+		platform8.Draw(window);
+		platform9.Draw(window);
+		platform10.Draw(window);
+		//platform11.Draw(window);
+
 
 		//CheckCollision
 		platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform5.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform6.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform7.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform8.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform9.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform10.GetCollision().CheckCollision(playerCollision, 1.0f);
+		//platform11.GetCollision().CheckCollision(playerCollision, 1.0f);
+
+		//pokeview
+		if (pos.x > 210) {
+			statepoke.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+			statepoke1.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+			statepoke2.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+			statepoke3.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+			statepoke4.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+			statepoke5.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+		}
 
 		//point
 		point.str(" ");
-		point << "Pokeball :  " << countpoint;
+		point << "pokeball :  " << countpoint;
 		Score.setString(point.str());
-		Score.setPosition({ player.GetPosition().x,player.GetPosition().y - 100 });
+		Score.setPosition({ view.getCenter().x - 300 ,view.getCenter().y - 335 });
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
 			{
@@ -190,7 +263,28 @@ int main()
 			itemVector[i].draw(window);
 		}
 		//window.draw(collision2);
+
 		player.Draw(window);
+
+		//pokestate
+		window.draw(statepoke);
+		if (countpoint == 1)window.draw(statepoke1);
+		else if (countpoint == 2)window.draw(statepoke2);
+		else if (countpoint == 3)window.draw(statepoke3);
+		else if (countpoint == 4)window.draw(statepoke4);
+		else if (countpoint == 5)window.draw(statepoke5);
+		else if (countpoint == 6)window.draw(statepoke5);
+		else if (countpoint == 7)window.draw(statepoke5);
+		else if (countpoint == 8)window.draw(statepoke5);
+		else if (countpoint == 9)window.draw(statepoke5);
+		else if (countpoint == 10)window.draw(statepoke5);
+		else if (countpoint == 11)window.draw(statepoke5);
+		else if (countpoint == 12)window.draw(statepoke5);
+		else if (countpoint == 13)window.draw(statepoke5);
+		else if (countpoint == 14)window.draw(statepoke5);
+		else if (countpoint == 15)window.draw(statepoke5);
+
+
 		window.draw(Score);
 		window.display();
 
