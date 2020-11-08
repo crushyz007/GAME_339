@@ -36,11 +36,34 @@ int main()
 
 	Player player(&playerTexture, sf::Vector2u(5, 4), 0.4f, 180.0f);
 
-	//bg
-	sf::RectangleShape bg(sf::Vector2f(2850.0f, 954.0f));
+	//map1
+	sf::RectangleShape bg(sf::Vector2f(2280.0f, 1920.0f));
 	sf::Texture background;
-	background.loadFromFile("texture/map1.png");
+	bg.setPosition(0.0f, 0.0f);
+	background.loadFromFile("texture/map22.png");
 	bg.setTexture(&background);
+
+	//map2
+	sf::RectangleShape bg2(sf::Vector2f(1800.0f, 1650.0f));
+	sf::Texture background2;
+	background2.loadFromFile("texture/map11.png");
+	bg2.setPosition(1850.0f, 0.0f);
+	bg2.setTexture(&background2);
+
+	/*//map2test
+	sf::RectangleShape bg2(sf::Vector2f(2850.0f, 954.0f));
+	sf::Texture background2;
+	bg2.setPosition(4500.0f, 0.0f);
+	background2.loadFromFile("texture/map2test.png");
+	bg2.setTexture(&background2);
+
+	//map2test2
+	sf::RectangleShape bg3(sf::Vector2f(2850.0f, 954.0f));
+	sf::Texture background3;
+	bg3.setPosition(4500.0f, 1000.0f);
+	background3.loadFromFile("texture/map2test2.png");
+	bg3.setTexture(&background3);*/
+
 
 	//time
 	float deltaTime = 0.0f; //delay
@@ -48,7 +71,7 @@ int main()
 
 	int animationFrame = 0;
 
-	//Platform
+	/*//Platform
 	Collision playerCollision = player.GetCollision(); // (w,l)block,(w,l)move,address
 	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-20.0f, 477.0f)); //left
 	Platform platform2(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, -20.0f));//top
@@ -61,7 +84,7 @@ int main()
 	Platform platform8(nullptr, sf::Vector2f(400.0f, 350.0f), sf::Vector2f(1300.0f, 850.0f));//river1down
 	Platform platform9(nullptr, sf::Vector2f(480.0f, 5.0f), sf::Vector2f(2020.0f, 880.0f));//forest down
 	Platform platform10(nullptr, sf::Vector2f(690.0f, 300.0f), sf::Vector2f(1400.0f, 50.0f));//riverup1
-	//Platform platform11(nullptr, sf::Vector2f(230.0f, 500.0f), sf::Vector2f(1800.0f, 50.0f));//riverup2
+	//Platform platform11(nullptr, sf::Vector2f(230.0f, 500.0f), sf::Vector2f(1800.0f, 50.0f));//riverup2*/
 
 	//Star
 	sf::Texture ITEM;
@@ -86,7 +109,7 @@ int main()
 	sf::Texture poke0;
 	poke0.loadFromFile("texture/p0.png");
 	sf::RectangleShape statepoke(sf::Vector2f(200, 100));
-	statepoke.setPosition(sf::Vector2f(view.getCenter().x + 10, 130));
+	statepoke.setPosition(sf::Vector2f(view.getCenter().x + 10, 520));
 	statepoke.setTexture(&poke0);
 
 	//pokeball 1
@@ -124,7 +147,6 @@ int main()
 	statepoke5.setPosition(sf::Vector2f(0, 0));
 	statepoke5.setTexture(&poke5);
 
-
 	sf::Font font;
 	font.loadFromFile("texture/ABCD.ttf");
 	std::ostringstream point;
@@ -136,6 +158,7 @@ int main()
 
 	while (window.isOpen())
 	{
+
 		int count = player.GetPosition().x;
 
 		deltaTime = clock.restart().asSeconds();
@@ -166,43 +189,45 @@ int main()
 			{
 				view.setCenter(540.0f, 360.0f);//window
 			}
-			if (view.getCenter().y + 360.0f >= 954.0f)
+			if (view.getCenter().y + 360.0f >= 1920.0f)
 			{
-				view.setCenter(540.0f, 594.0f);//window
+				view.setCenter(540.0f, 1560.0f);//window
 			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 954.0f)
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 			{
 				view.setCenter(540.0f, player.GetPosition().y);
 			}
 
 		}
-		if (view.getCenter().x + 540.0f >= 2850.0f)
+		if (view.getCenter().x + 540.0f >= 2280.0f)
 		{
 			if (view.getCenter().y - 360.0f <= 0.0f)
 			{
-				view.setCenter(2310.0f, 360.0f);//window 1248-540 collision right 
+				view.setCenter(1770.0f, 360.0f);//window 1248-540 collision right 
 			}
-			if (view.getCenter().y + 360.0f >= 954.0f)
+			if (view.getCenter().y + 360.0f >= 1920.0f)
 			{
-				view.setCenter(2310.0f, 594.0f);//window 1248-540
+				view.setCenter(1770.0f, 1560.0f);//window 1248-540
 			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 954.0f)
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 			{
-				view.setCenter(2310.0f, player.GetPosition().y);
+				view.setCenter(1770.0f, player.GetPosition().y);
 			}
 		}
-		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 2850.0f)
+		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 2280.0f)
 		{
 			if (view.getCenter().y - 360.0f <= 0.0f)
 			{
 				view.setCenter(player.GetPosition().x, 360.0f);
 			}
-			if (view.getCenter().y + 360.0f >= 954.0f)
+			if (view.getCenter().y + 360.0f >= 1920.0f)
 			{
-				view.setCenter(player.GetPosition().x, 594.0f);
+				view.setCenter(player.GetPosition().x, 1560.0f);
 			}
 		}
-		//PlatformDraw
+
+
+		/*//PlatformDraw
 		platform1.Draw(window);
 		platform2.Draw(window);
 		platform3.Draw(window);
@@ -227,7 +252,7 @@ int main()
 		platform8.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform9.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform10.GetCollision().CheckCollision(playerCollision, 1.0f);
-		//platform11.GetCollision().CheckCollision(playerCollision, 1.0f);
+		//platform11.GetCollision().CheckCollision(playerCollision, 1.0f);*/
 
 		//pokeview
 		if (pos.x > 210) {
@@ -255,9 +280,18 @@ int main()
 			itemVector[i].update(deltaTime, player);
 		}
 
+		//warp to map2
+		/*if ((player.GetPosition().x >= 1939 && player.GetPosition().x <= 2112) && (player.GetPosition().y >= 619 && player.GetPosition().y <= 639)) {
+			std::cout << "...........................";
+			player.Setposition(4500, 1500);
+		}*/
+
 		window.clear();
 		window.setView(view);
 		window.draw(bg);
+		//window.draw(bg2);
+		//window.draw(bg3);
+
 		for (int i = 0; i < itemVector.size(); i++)
 		{
 			itemVector[i].draw(window);
@@ -283,7 +317,6 @@ int main()
 		else if (countpoint == 13)window.draw(statepoke5);
 		else if (countpoint == 14)window.draw(statepoke5);
 		else if (countpoint == 15)window.draw(statepoke5);
-
 
 		window.draw(Score);
 		window.display();
