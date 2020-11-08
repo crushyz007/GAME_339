@@ -23,13 +23,13 @@ void Player::Update(float deltaTime)
     sf::Vector2f movement(0.0f, 0.0f);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        movement.x -= speed * deltaTime*1.5;
+        movement.x -= speed * deltaTime*5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        movement.x += speed * deltaTime*1.5;
+        movement.x += speed * deltaTime*5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        movement.y -= speed * deltaTime*1.5;
+        movement.y -= speed * deltaTime*5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        movement.y += speed * deltaTime*1.5;
+        movement.y += speed * deltaTime*5;
 
     if (movement.x == 0 && movement.y == 0)
     {
@@ -65,7 +65,9 @@ void Player::Update(float deltaTime)
     body.setTextureRect(animation.uvRect);
     body.move(movement);
 }
-
+void Player::Setposition(float x, float y) {
+    body.setPosition(x, y);
+}
 void Player::Draw(sf::RenderWindow& window)
 {
     window.draw(body);
