@@ -50,43 +50,20 @@ int main()
 	bg2.setPosition(1850.0f, 0.0f);
 	bg2.setTexture(&background2);
 
-	/*//map2test
-	sf::RectangleShape bg2(sf::Vector2f(2850.0f, 954.0f));
-	sf::Texture background2;
-	bg2.setPosition(4500.0f, 0.0f);
-	background2.loadFromFile("texture/map2test.png");
-	bg2.setTexture(&background2);
-
-	//map2test2
-	sf::RectangleShape bg3(sf::Vector2f(2850.0f, 954.0f));
-	sf::Texture background3;
-	bg3.setPosition(4500.0f, 1000.0f);
-	background3.loadFromFile("texture/map2test2.png");
-	bg3.setTexture(&background3);*/
-
-
 	//time
 	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
 
 	int animationFrame = 0;
 
-	/*//Platform
+	//Platform
 	Collision playerCollision = player.GetCollision(); // (w,l)block,(w,l)move,address
-	Platform platform1(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(-20.0f, 477.0f)); //left
-	Platform platform2(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, -20.0f));//top
-	Platform platform3(nullptr, sf::Vector2f(2850.0f, 20.0f), sf::Vector2f(1425.0f, 950.0f));//down
-	Platform platform4(nullptr, sf::Vector2f(20.0f, 954.0f), sf::Vector2f(2870, 477.0f));//right
-	//Platform platform5(nullptr, sf::Vector2f(1300.0f, 400.0f), sf::Vector2f(40.0f, 150.0f));//block1top
-	Platform platform5(nullptr, sf::Vector2f(1300.0f, 600.0f), sf::Vector2f(40.0f, 55.0f));//block1top
-	Platform platform6(nullptr, sf::Vector2f(1500.0f, 400.0f), sf::Vector2f(450.0f, 850.0f));//block2down
-	Platform platform7(nullptr, sf::Vector2f(2600.0f, 200.0f), sf::Vector2f(2800.0f, 150.0f));//mountain++
-	Platform platform8(nullptr, sf::Vector2f(400.0f, 350.0f), sf::Vector2f(1300.0f, 850.0f));//river1down
-	Platform platform9(nullptr, sf::Vector2f(480.0f, 5.0f), sf::Vector2f(2020.0f, 880.0f));//forest down
-	Platform platform10(nullptr, sf::Vector2f(690.0f, 300.0f), sf::Vector2f(1400.0f, 50.0f));//riverup1
-	//Platform platform11(nullptr, sf::Vector2f(230.0f, 500.0f), sf::Vector2f(1800.0f, 50.0f));//riverup2*/
+	Platform platform1(nullptr, sf::Vector2f(20.0f, 1920.0f), sf::Vector2f(-20.0f, 960.0f)); //left
+	Platform platform2(nullptr, sf::Vector2f(2280.0f, 20.0f), sf::Vector2f(1140.0f, -20.0f));//top
+	Platform platform3(nullptr, sf::Vector2f(2280.0f, 20.0f), sf::Vector2f(1140.0f, 1915.0f));//down
+	Platform platform4(nullptr, sf::Vector2f(20.0f, 1920.0f), sf::Vector2f(2300, 960.0f));//right
 
-	//Star
+	//pokeball 
 	sf::Texture ITEM;
 	ITEM.loadFromFile("texture/pokebon.png");
 	std::vector <Item> itemVector;
@@ -105,6 +82,7 @@ int main()
 	//point
 	int countpoint = 0;
 
+	//state pokemon
 	//pokeball 0
 	sf::Texture poke0;
 	poke0.loadFromFile("texture/p0.png");
@@ -227,18 +205,18 @@ int main()
 		}
 
 
-		/*//PlatformDraw
+		//PlatformDraw
 		platform1.Draw(window);
 		platform2.Draw(window);
 		platform3.Draw(window);
 		platform4.Draw(window);
-		platform5.Draw(window);
+		/*platform5.Draw(window);
 		platform6.Draw(window);
 		platform7.Draw(window);
 		platform8.Draw(window);
 		platform9.Draw(window);
 		platform10.Draw(window);
-		//platform11.Draw(window);
+		//platform11.Draw(window);*/
 
 
 		//CheckCollision
@@ -246,7 +224,7 @@ int main()
 		platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform5.GetCollision().CheckCollision(playerCollision, 1.0f);
+		/*platform5.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform6.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform7.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform8.GetCollision().CheckCollision(playerCollision, 1.0f);
