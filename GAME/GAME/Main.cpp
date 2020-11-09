@@ -55,7 +55,7 @@ int main()
 	sf::Texture background3;
 	background3.loadFromFile("texture/map11.png");
 	bg3.setPosition(2300.0f, 2100.0f);
-	bg3.setTexture(&background2);
+	bg3.setTexture(&background3);
 
 	//time
 	float deltaTime = 0.0f; //delay
@@ -218,11 +218,6 @@ int main()
 			u = 1;
 			player.Setposition(2740, 980);
 		}
-		/*if ((player.GetPosition().x > 2120 && player.GetPosition().x < 2240) && player.GetPosition().y >= 962 && player.GetPosition().y <= 962)
-		{
-			u = 1;
-			player.Setposition(2250, 980);
-		}*/
 		if (u == 1)
 		{
 			view.setCenter(player.GetPosition());
@@ -269,6 +264,58 @@ int main()
 				}
 			}
 		}
+		//warp to map3
+		if ((player.GetPosition().x >= 3500 && player.GetPosition().x <= 3550) && (player.GetPosition().y >= 1750 && player.GetPosition().y <= 1830)) {
+			u = 2;
+			player.Setposition(3431, 2383);
+		}
+		if (u == 2)
+		{
+			view.setCenter(player.GetPosition());
+			if (view.getCenter().x - 540.0f <= 2305.0f)//left
+			{
+				if (view.getCenter().y - 360.0f <= 0.0f)
+				{
+					view.setCenter(2845.0f, 360.0f);//window
+				}
+				if (view.getCenter().y + 360.0f >= 3840.0f)
+				{
+					view.setCenter(2845.0f, 3480.0f);//window
+				}
+				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
+				{
+					view.setCenter(2845.0f, player.GetPosition().y);
+				}
+
+			}
+			if (view.getCenter().x + 540.0f >= 4580.0f) //right
+			{
+				if (view.getCenter().y - 360.0f <= 0.0f)
+				{
+					view.setCenter(4040.0f, 360.0f);
+				}
+				if (view.getCenter().y + 360.0f >= 3840.0f)
+				{
+					view.setCenter(4040.0f, 3480.0f);
+				}
+				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
+				{
+					view.setCenter(4040.0f, player.GetPosition().y);
+				}
+			}
+			if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
+			{
+				if (view.getCenter().y - 360.0f <= 2098.0f)
+				{
+					view.setCenter(player.GetPosition().x, 2460.0f);
+				}
+				if (view.getCenter().y + 360.0f >= 3840.0f)
+				{
+					view.setCenter(player.GetPosition().x, 3480.0f);
+				}
+			}
+		}
+
 		//PlatformDraw
 		platform1.Draw(window);
 		platform2.Draw(window);
@@ -316,12 +363,6 @@ int main()
 		{
 			itemVector[i].update(deltaTime, player);
 		}
-
-		/*//warp to map2
-		if ((player.GetPosition().x >= 1939 && player.GetPosition().x <= 2112) && (player.GetPosition().y >= 619 && player.GetPosition().y <= 639)) {
-			std::cout << "...........................";
-			player.Setposition(4500, 1500);
-		}*/
 
 		window.clear();
 		window.setView(view);
