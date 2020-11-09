@@ -50,6 +50,13 @@ int main()
 	bg2.setPosition(2300.0f, 0.0f);
 	bg2.setTexture(&background2);
 
+	//map3
+	sf::RectangleShape bg3(sf::Vector2f(2280.0f, 1920.0f));
+	sf::Texture background3;
+	background3.loadFromFile("texture/map11.png");
+	bg3.setPosition(2300.0f, 2100.0f);
+	bg3.setTexture(&background2);
+
 	//time
 	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
@@ -209,7 +216,7 @@ int main()
 		//warp to map2
 		if ((player.GetPosition().x >= 2000 && player.GetPosition().x <= 2240) && (player.GetPosition().y >= 930 && player.GetPosition().y <= 1000)) {
 			u = 1;
-			player.Setposition(2400, 980);
+			player.Setposition(2740, 980);
 		}
 		/*if ((player.GetPosition().x > 2120 && player.GetPosition().x < 2240) && player.GetPosition().y >= 962 && player.GetPosition().y <= 962)
 		{
@@ -219,19 +226,19 @@ int main()
 		if (u == 1)
 		{
 			view.setCenter(player.GetPosition());
-			if (view.getCenter().x - 540.0f <= 0.0f)//left
+			if (view.getCenter().x - 540.0f <= 2300.0f)//left
 			{
 				if (view.getCenter().y - 360.0f <= 0.0f)
 				{
-					view.setCenter(540.0f, 360.0f);//window
+					view.setCenter(2840.0f, 360.0f);//window
 				}
 				if (view.getCenter().y + 360.0f >= 1920.0f)
 				{
-					view.setCenter(4420.0f, 1560.0f);//window
+					view.setCenter(2840.0f, 1560.0f);//window
 				}
 				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 				{
-					view.setCenter(4420.0f, player.GetPosition().y);
+					view.setCenter(2840.0f, player.GetPosition().y);
 				}
 
 			}
@@ -239,15 +246,15 @@ int main()
 			{
 				if (view.getCenter().y - 360.0f <= 0.0f)
 				{
-					view.setCenter(4020.0f, 360.0f);
+					view.setCenter(4040.0f, 360.0f);
 				}
 				if (view.getCenter().y + 360.0f >= 1920.0f)
 				{
-					view.setCenter(4020.0f, 1560.0f);
+					view.setCenter(4040.0f, 1560.0f);
 				}
 				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 				{
-					view.setCenter(4020.0f, player.GetPosition().y);
+					view.setCenter(4040.0f, player.GetPosition().y);
 				}
 			}
 			if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
@@ -320,7 +327,7 @@ int main()
 		window.setView(view);
 		window.draw(bg);
 		window.draw(bg2);
-		//window.draw(bg3);
+		window.draw(bg3);
 
 		for (int i = 0; i < itemVector.size(); i++)
 		{
