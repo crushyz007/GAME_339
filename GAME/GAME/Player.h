@@ -2,6 +2,7 @@
 #include<SFML/Graphics.hpp>
 #include "Animation.h"
 #include"Collision.h"
+#include"Enemy.h"
 class Player
 {
 public:
@@ -11,6 +12,8 @@ public:
 	void Update(float deltaTime);
 	void Draw(sf::RenderWindow& window);
 	void Setposition(float x, float y);
+	void UpdateEnemy(float deltaTime, std::vector<Enemy>& EnemyVector);
+	void UpdateEnemy1(float deltaTime, std::vector<Enemy>& EnemyVector1);
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	Collision GetCollision() { return Collision(body); }
 
