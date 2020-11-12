@@ -23,13 +23,13 @@ void Player::Update(float deltaTime)
     sf::Vector2f movement(0.0f, 0.0f);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        movement.x -= speed * deltaTime * 3;
+        movement.x -= speed * deltaTime * 5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        movement.x += speed * deltaTime * 3;
+        movement.x += speed * deltaTime * 5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        movement.y -= speed * deltaTime * 3;
+        movement.y -= speed * deltaTime * 5;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        movement.y += speed * deltaTime * 3;
+        movement.y += speed * deltaTime * 5;
 
     if (movement.x == 0 && movement.y == 0)
     {
