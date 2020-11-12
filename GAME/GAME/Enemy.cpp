@@ -7,7 +7,7 @@ Enemy::Enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
     this->posx = x;
     this->posy = y;
     this->face = 1;
-    body.setSize(sf::Vector2f(55.0f, 64.0f));
+    body.setSize(sf::Vector2f(45.0f, 54.0f));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(this->posx, this->posy);
     body.setTexture(texture);
@@ -20,7 +20,7 @@ Enemy::~Enemy()
 void Enemy::update(float deltaTime)
 {
     float posxx = body.getPosition().x;
-    Velocity.x = 80.0f;
+    Velocity.x = 100.0f;
     Velocity.y = 0.0f;
     if (posxx > this->posx + 200) {
         this->face = -1;

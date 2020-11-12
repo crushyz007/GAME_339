@@ -163,6 +163,16 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2087.0f, 1628.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1795.0f, 1550.0f));
 	//map2
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2964.0f, 830.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2898.0f, 1350.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3258.0f, 1450.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4073.0f, 1294.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4007.0f, 1081.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2816.0f, 155.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3007.0f, 155.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4356.0f, 118.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4050.0f, 290.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3705.0f, 877.0f));
 
 
 	//point
@@ -227,8 +237,25 @@ int main()
 	ENEMY1.loadFromFile("texture/yellownorm1.png");
 	std::vector <Enemy> EnemyVector;
 	std::vector <Enemy> EnemyVector1;
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 400.0f, 530.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 200.0f, 530.0f));
+
+	//Enemies map2
+	//Left-Right
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2844.0f, 880.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2845.0f, 725.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2807.0f, 227.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3407.0f, 531.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4189.0f, 220.0f));
+	//EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4080.0f, 870.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3100.0f, 1340.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4007.0f, 1176.0f));
+
+	//Up-Down
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2703.0f, 1480.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2790.0f, 353.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3492.0f, 1249.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4264.0f, 1143.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4210.0f, 416.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3273.0f, 414.0f));
 
 	int u = 0;
 	while (window.isOpen())

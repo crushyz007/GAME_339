@@ -75,7 +75,7 @@ void Player::UpdateEnemy(float deltaTime, std::vector<Enemy>& EnemyVector)
     {
         if (this->GetCollision().CheckCollision(EnemyVector[i].GetCollider()))
         {
-            body.setPosition(2000, 800);
+            body.setPosition(2386, 1028);
         }
     }
 }
@@ -85,7 +85,7 @@ void Player::UpdateEnemy1(float deltaTime, std::vector<Enemy>& EnemyVector1)
     {
         if (this->GetCollision().CheckCollision(EnemyVector1[i].GetCollider()))
         {
-            body.setPosition(2000, 800);
+            body.setPosition(2386, 1028);
         }
     }
 }
