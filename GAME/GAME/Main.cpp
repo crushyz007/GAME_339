@@ -58,6 +58,19 @@ int main()
 	bg3.setPosition(2300.0f, 2100.0f);
 	bg3.setTexture(&background3);
 
+	//sound main game
+	sf::Music music;
+	music.openFromFile("texture/PaletteTown.wav");
+	music.setVolume(5.0f);
+	music.play();
+
+	//sound taking a pokeball
+	sf::SoundBuffer sound;
+	sound.loadFromFile("texture/Caught1.wav");
+	sf::Sound soundTake;
+	soundTake.setBuffer(sound);
+	soundTake.setVolume(20.0f);
+
 	//time
 	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
@@ -139,6 +152,8 @@ int main()
 	Platform platform69(nullptr, sf::Vector2f(0.5f, 120.0f), sf::Vector2f(3234.0f, 130.0f));
 	Platform platform70(nullptr, sf::Vector2f(240.0f, 160.0f), sf::Vector2f(3392.0f, 110.0f));
 	Platform platform71(nullptr, sf::Vector2f(480.0f, 358.0f), sf::Vector2f(3760.0f, 183.0f));
+	//map3
+	Platform platform72(nullptr, sf::Vector2f(1071.0f, 316.0f), sf::Vector2f(4030.0f, 2250.0f));
 
 	//pokeball 
 	sf::Texture ITEM;
@@ -503,6 +518,7 @@ int main()
 		platform69.Draw(window);
 		platform70.Draw(window);
 		platform71.Draw(window);
+		platform72.Draw(window);
 
 		//pokeview
 		if (pos.x > 210) {
@@ -522,6 +538,7 @@ int main()
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
 			{
+				soundTake.play();
 				countpoint += 1;
 			}
 		}
@@ -669,6 +686,7 @@ int main()
 		platform69.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform70.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform71.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform72.GetCollision().CheckCollision(playerCollision, 1.0f);
 
 	}
 	return 0;
