@@ -61,7 +61,7 @@ int main()
 	//sound main game
 	sf::Music music;
 	music.openFromFile("texture/PaletteTown.wav");
-	music.setVolume(5.0f);
+	music.setVolume(50.0f);
 	music.play();
 
 	//sound taking a pokeball
@@ -69,7 +69,7 @@ int main()
 	sound.loadFromFile("texture/Caught1.wav");
 	sf::Sound soundTake;
 	soundTake.setBuffer(sound);
-	soundTake.setVolume(20.0f);
+	soundTake.setVolume(100.0f);
 
 	//time
 	float deltaTime = 0.0f; //delay
@@ -154,6 +154,31 @@ int main()
 	Platform platform71(nullptr, sf::Vector2f(480.0f, 358.0f), sf::Vector2f(3760.0f, 183.0f));
 	//map3
 	Platform platform72(nullptr, sf::Vector2f(1071.0f, 316.0f), sf::Vector2f(4030.0f, 2250.0f));
+	Platform platform73(nullptr, sf::Vector2f(1045.0f, 400.0f), sf::Vector2f(2786.0f, 2178.0f));
+	Platform platform74(nullptr, sf::Vector2f(280.0f, 650.0f), sf::Vector2f(4408.0f, 2565.0f));
+	Platform platform75(nullptr, sf::Vector2f(375.0f, 1465.0f), sf::Vector2f(2458.0f, 3066.0f));
+	Platform platform76(nullptr, sf::Vector2f(675.0f, 380.0f), sf::Vector2f(2976.0f, 3700.0f));
+	Platform platform77(nullptr, sf::Vector2f(500.0f, 650.0f), sf::Vector2f(4400.0f, 3641.0f));
+	Platform platform79(nullptr, sf::Vector2f(520.0f, 180.0f), sf::Vector2f(4460.0f, 3212.0f));
+	Platform platform80(nullptr, sf::Vector2f(150.0f, 135.0f), sf::Vector2f(3700.0f, 2855.0f));
+	//Platform platform81(nullptr, sf::Vector2f(590.0f, 227.0f), sf::Vector2f(2494.0f, 3282.0f));
+	Platform platform82(nullptr, sf::Vector2f(540.0f, 150.0f), sf::Vector2f(3793.0f, 3676.0f));
+	//Platform platform83(nullptr, sf::Vector2f(510.0f, 270.0f), sf::Vector2f(2987.0f, 3408.0f));
+	Platform platform84(nullptr, sf::Vector2f(160.0f, 120.0f), sf::Vector2f(3694.0f, 3200.0f));
+	Platform platform85(nullptr, sf::Vector2f(210.0f, 110.0f), sf::Vector2f(2931.0f, 2850.0f));
+	Platform platform86(nullptr, sf::Vector2f(163.0f, 100.0f), sf::Vector2f(3245.0f, 2850.0f));
+	Platform platform87(nullptr, sf::Vector2f(465.0f, 0.1f), sf::Vector2f(4005.0f, 2920.0f));
+	Platform platform88(nullptr, sf::Vector2f(30.0f, 5.0f), sf::Vector2f(3950.0f, 2940.0f));
+	Platform platform89(nullptr, sf::Vector2f(310.0f, 170.0f), sf::Vector2f(2985.0f, 3200.0f));
+	Platform platform90(nullptr, sf::Vector2f(272.0f, 180.0f), sf::Vector2f(2802.0f, 2680.0f));
+	Platform platform91(nullptr, sf::Vector2f(271.0f, 80.0f), sf::Vector2f(3099.0f, 2710.0f));
+	Platform platform92(nullptr, sf::Vector2f(660.0f, 75.0f), sf::Vector2f(3625.0f, 3401.0f));
+	Platform platform93(nullptr, sf::Vector2f(110.0f, 90.0f), sf::Vector2f(3350.0f, 3250.0f));
+	Platform platform94(nullptr, sf::Vector2f(125.0f, 170.0f), sf::Vector2f(3838.0f, 3200.0f));
+	Platform platform95(nullptr, sf::Vector2f(50.0f, 5.0f), sf::Vector2f(3936.0f, 3310.0f));
+	Platform platform96(nullptr, sf::Vector2f(140.0f, 1.0f), sf::Vector2f(2739.0f, 3250.0f));
+	Platform platform97(nullptr, sf::Vector2f(20.0f, 0.5f), sf::Vector2f(3186.0f, 3260.0f));
+	Platform platform98(nullptr, sf::Vector2f(35.0f, 0.1f), sf::Vector2f(2803.0f, 2910.0f));
 
 	//pokeball 
 	sf::Texture ITEM;
@@ -187,7 +212,7 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3007.0f, 155.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4356.0f, 118.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 4050.0f, 290.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3705.0f, 877.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3705.0f, 920.0f));
 
 
 	//point
@@ -237,10 +262,10 @@ int main()
 	statepoke5.setTexture(&poke5);
 
 	sf::Font font;
-	font.loadFromFile("texture/ABCD.ttf");
+	font.loadFromFile("texture/PokemonFont.ttf");
 	std::ostringstream point;
 	sf::Text Score;
-	Score.setCharacterSize(30);
+	Score.setCharacterSize(35);
 	Score.setString(point.str());
 	Score.setFont(font);
 	Score.setFillColor(sf::Color::White);
@@ -519,6 +544,31 @@ int main()
 		platform70.Draw(window);
 		platform71.Draw(window);
 		platform72.Draw(window);
+		platform73.Draw(window);
+		platform74.Draw(window);
+		platform75.Draw(window);
+		platform76.Draw(window);
+		platform77.Draw(window);
+		platform79.Draw(window);
+		platform80.Draw(window);
+		//platform81.Draw(window);
+		platform82.Draw(window);
+		//platform83.Draw(window);
+		platform84.Draw(window);
+		platform85.Draw(window);
+		platform86.Draw(window);
+		platform87.Draw(window);
+		platform88.Draw(window);
+		platform89.Draw(window);
+		platform90.Draw(window);
+		platform91.Draw(window);
+		platform92.Draw(window);
+		platform93.Draw(window);
+		platform94.Draw(window);
+		platform95.Draw(window);
+		platform96.Draw(window);
+		platform97.Draw(window);
+		platform98.Draw(window);
 
 		//pokeview
 		if (pos.x > 210) {
@@ -535,6 +585,7 @@ int main()
 		point << "pokeball :  " << countpoint;
 		Score.setString(point.str());
 		Score.setPosition({ view.getCenter().x - 300 ,view.getCenter().y - 335 });
+		//plus point
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
 			{
@@ -687,6 +738,31 @@ int main()
 		platform70.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform71.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform72.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform73.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform74.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform75.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform76.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform77.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform79.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform80.GetCollision().CheckCollision(playerCollision, 1.0f);
+		//platform81.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform82.GetCollision().CheckCollision(playerCollision, 1.0f);
+		//platform83.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform84.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform85.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform86.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform87.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform88.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform89.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform90.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform91.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform92.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform93.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform94.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform95.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform96.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
+		platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
 
 	}
 	return 0;
