@@ -14,6 +14,9 @@ public:
 	void Setposition(float x, float y);
 	void UpdateEnemy(float deltaTime, std::vector<Enemy>& EnemyVector);
 	void UpdateEnemy1(float deltaTime, std::vector<Enemy>& EnemyVector1);
+	void UpdatePokemon1(float deltaTime, std::vector<Enemy>& PokemonVector1);
+	int getFaceDirection() { return this->faceDirection; }
+
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	Collision GetCollision() { return Collision(body); }
 
@@ -24,5 +27,6 @@ private:
 	float speed;
 	bool faceRight;
 	bool faceTop;
-
+	int faceDirection;
+	bool bullet;
 };

@@ -8,6 +8,7 @@ public:
 
 	void Update(int row, float deltaTime, bool faceRight);
 	void UpdateItem(int row, float deltaTime, bool faceRight);
+	void UpdateBullet(int row, float deltaTime);
 
 public:
 	sf::IntRect uvRect;
@@ -20,4 +21,5 @@ private:
 	float switchTime;
 
 };
+
 

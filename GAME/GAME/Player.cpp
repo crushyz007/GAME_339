@@ -23,13 +23,29 @@ void Player::Update(float deltaTime)
     sf::Vector2f movement(0.0f, 0.0f);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
         movement.x -= speed * deltaTime * 5;
+        faceDirection = 1;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
         movement.x += speed * deltaTime * 5;
+        faceDirection = 2;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
         movement.y -= speed * deltaTime * 5;
+        faceDirection = 3;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
         movement.y += speed * deltaTime * 5;
+        faceDirection = 4;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        bullet = true;
+    }
 
     if (movement.x == 0 && movement.y == 0)
     {
@@ -89,6 +105,18 @@ void Player::UpdateEnemy1(float deltaTime, std::vector<Enemy>& EnemyVector1)
         }
     }
 }
+
+void Player::UpdatePokemon1(float deltaTime, std::vector<Enemy>& PokemonVector1)
+{
+    for (int i = 0; i < PokemonVector1.size(); i++)
+    {
+        if (this->GetCollision().CheckCollision(PokemonVector1[i].GetCollider()))
+        {
+            body.setPosition(2900, 3300);
+        }
+    }
+}
+
 
 void Player::Draw(sf::RenderWindow& window)
 {

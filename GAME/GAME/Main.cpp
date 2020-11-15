@@ -14,10 +14,12 @@
 #include"Collision.h"
 #include"Item.h"
 #include"Enemy.h"
+#include"Bulletpoke.h"
+#include"Pokemon.h"
 
 //static const float VIEW_HEIGHT = 1080.0f;
 //static const float VIEW_WIDE = 720.0f;
-
+int bulletDirection;
 /*void ResizeView(const sf::RenderWindow& window, sf::View& view)
 {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
@@ -60,8 +62,8 @@ int main()
 
 	//sound main game
 	sf::Music music;
-	music.openFromFile("texture/PaletteTown.wav");
-	music.setVolume(50.0f);
+	music.openFromFile("texture/PaletteTown1.wav");
+	music.setVolume(10.0f);
 	music.play();
 
 	//sound taking a pokeball
@@ -261,6 +263,13 @@ int main()
 	statepoke5.setPosition(sf::Vector2f(0, 0));
 	statepoke5.setTexture(&poke5);
 
+	//bullet
+	int checkBull = 0;
+	sf::Texture BULLET;
+	BULLET.loadFromFile("texture/cointest.png");
+	Bulletpoke BulleT(&BULLET, sf::Vector2u(6, 1), 0.15f, 600, view.getCenter());
+
+
 	sf::Font font;
 	font.loadFromFile("texture/PokemonFont.ttf");
 	std::ostringstream point;
@@ -273,13 +282,21 @@ int main()
 	//Enemy
 	sf::Texture ENEMY;
 	sf::Texture ENEMY1;
+	sf::Texture POKEMON1;
 	ENEMY.loadFromFile("texture/mouse1.png");
 	ENEMY1.loadFromFile("texture/yellownorm1.png");
+	POKEMON1.loadFromFile("texture/cointest.png");
 	std::vector <Enemy> EnemyVector;
 	std::vector <Enemy> EnemyVector1;
+	std::vector <Enemy> PokemonVector1;
+
+	//Pokemon
+	sf::Texture POKEMON;
+	std::vector <Pokemon> PokemonVector;
+	POKEMON.loadFromFile("texture/enemy.png");
 
 	//Enemies map2
-	//Left-Right
+	//////Left-Right
 	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2844.0f, 880.0f));
 	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2845.0f, 725.0f));
 	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2807.0f, 227.0f));
@@ -288,14 +305,36 @@ int main()
 	//EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4080.0f, 870.0f));
 	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3100.0f, 1340.0f));
 	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4007.0f, 1176.0f));
-
-	//Up-Down
+	//////Up-Down
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2703.0f, 1480.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2790.0f, 353.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3492.0f, 1249.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4264.0f, 1143.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4210.0f, 416.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3273.0f, 414.0f));
+
+	//POKEMON MAP3
+	PokemonVector.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
+
+
+	/*//TEST RANDOM SPAWNING WALKING
+	sf::Texture npc;
+	npc.loadFromFile("texture/Ash1.png");
+
+	sf::Sprite NPC(npc);
+	NPC.setPosition(2900.0f,3000.0f);
+	NPC.setScale(2.0f, 2.0f);
+
+	sf::Vector2u npcsize = npc.getSize();
+	npcsize.x /= 5;
+	npcsize.y /= 4;
+
+	int npcTexturecount = 0;
+	float NPC2Speed = 0.1;
+
+	NPC.setOrigin((npcsize.x) / 2, (npcsize.y) / 2);
+	NPC.setTextureRect(sf::IntRect(0, 0, npcsize.x, npcsize.y));
+	//UNTIL THIS*/
 
 	int u = 0;
 	while (window.isOpen())
@@ -471,6 +510,11 @@ int main()
 			}
 		}
 
+		//win sound
+		if ((player.GetPosition().x >= 3363 && player.GetPosition().x <= 3473) && (player.GetPosition().y >= 3701 && player.GetPosition().y <= 3770)) {
+			soundTake.play();
+		}
+
 		//PlatformDraw
 		platform1.Draw(window);
 		platform2.Draw(window);
@@ -599,6 +643,7 @@ int main()
 		{
 			itemVector[i].update(deltaTime, player);
 		}
+
 		//Update Enemy
 		for (int i = 0; i < EnemyVector.size(); i++)
 		{
@@ -608,7 +653,15 @@ int main()
 		{
 			EnemyVector1[i].update1(deltaTime);
 		}
-
+		for (int i = 0; i < PokemonVector1.size(); i++)
+		{
+			PokemonVector1[i].update1(deltaTime);
+		}
+		//Update Pokemon
+		for (int i = 0; i < PokemonVector.size(); i++)
+		{
+			PokemonVector[i].update(deltaTime, BulleT);
+		}
 
 		window.clear();
 		window.setView(view);
@@ -621,6 +674,7 @@ int main()
 		{
 			itemVector[i].draw(window);
 		}
+
 		//Draw Enemy
 		for (int i = 0; i < EnemyVector.size(); i++)
 		{
@@ -630,8 +684,71 @@ int main()
 		{
 			EnemyVector1[i].draw(window);
 		}
+		for (int i = 0; i < PokemonVector1.size(); i++)
+		{
+			PokemonVector1[i].draw(window);
+		}
+
+		//Draw Pokemon
+		for (int i = 0; i < PokemonVector.size(); i++)
+		{
+			PokemonVector[i].draw(window);
+		}
+
+		//UPDATE PLAYER AND ENEMY
+		player.UpdatePokemon1(deltaTime, PokemonVector1);
 		player.UpdateEnemy1(deltaTime, EnemyVector1);
 		player.UpdateEnemy(deltaTime, EnemyVector);
+
+		//bulletpoke
+		if (countpoint == 1) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+			{
+				bulletDirection = player.getFaceDirection();
+
+				checkBull = 1;
+				if (bulletDirection == 1) {
+					BulleT.attackL(pos);
+				}
+				else if (bulletDirection == 2) {
+					BulleT.attackR(pos);
+				}
+				else if (bulletDirection == 3) {
+					BulleT.attackU(pos);
+				}
+				else if (bulletDirection == 4) {
+					BulleT.attackD(pos);
+				}
+			}
+			if (checkBull == 1)
+			{
+				if (bulletDirection == 1) {
+					BulleT.updateLEFT(deltaTime);
+				}
+				else if (bulletDirection == 2) {
+					BulleT.updateRIGHT(deltaTime);
+				}
+				else if (bulletDirection == 3) {
+					BulleT.updateUP(deltaTime);
+				}
+				else if (bulletDirection == 4) {
+					BulleT.updateDOWN(deltaTime);
+				}
+				BulleT.draw(window);
+
+				//UPDATE Bullet Pokemon
+				for (int i = 0;i < PokemonVector.size();i++)
+				{
+					if (PokemonVector[i].isBul() == 1) {
+						BulleT.deletepoke();
+					}
+				}
+			}
+			if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
+			{
+				checkBull = 0;
+			}
+		}
 		player.Draw(window);
 
 		//pokestate
@@ -661,6 +778,43 @@ int main()
 		else if (countpoint == 23)window.draw(statepoke5);
 		else if (countpoint == 24)window.draw(statepoke5);
 		else if (countpoint == 25)window.draw(statepoke5);
+
+		/*//randomTEST
+		int randomTime, r;
+		srand(time(NULL));
+		r = rand() % 4;
+
+		if (r == 0)
+		{
+			NPC.move(-NPC2Speed, 0.0f);
+			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 1, npcsize.x, npcsize.y));
+
+		}
+		if (r == 1)
+		{
+			NPC.move(NPC2Speed, 0.0f);
+			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 3, npcsize.x, npcsize.y));
+
+		}
+		if (r == 2)
+		{
+			NPC.move(0.0f, -NPC2Speed);
+			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 2, npcsize.x, npcsize.y));
+
+		}
+		if (r == 3)
+		{
+			NPC.move(0.0f, NPC2Speed);
+			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 0, npcsize.x, npcsize.y));
+
+		}
+
+		npcTexturecount = npcTexturecount + 1;
+		if (npcTexturecount == 2) {
+			npcTexturecount = 0;
+		}
+		window.draw(NPC);
+		//UNTIL THIS*/
 
 		window.draw(Score);
 		window.display();
