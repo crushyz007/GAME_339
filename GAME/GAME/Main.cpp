@@ -17,15 +17,8 @@
 #include"Bulletpoke.h"
 #include"Pokemon.h"
 
-//static const float VIEW_HEIGHT = 1080.0f;
-//static const float VIEW_WIDE = 720.0f;
 int bulletDirection;
-/*void ResizeView(const sf::RenderWindow& window, sf::View& view)
-{
-	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
-	view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
-	view.setSize(VIEW_WIDE * aspectRatio, VIEW_WIDE);
-}*/
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SATOSHI!", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
@@ -266,9 +259,10 @@ int main()
 	//bullet
 	int checkBull = 0;
 	sf::Texture BULLET;
-	BULLET.loadFromFile("texture/cointest.png");
+	BULLET.loadFromFile("texture/pokebon.png");
 	Bulletpoke BulleT(&BULLET, sf::Vector2u(6, 1), 0.15f, 600, view.getCenter());
-
+	int countb = 0;
+	sf::Clock timer;
 
 	sf::Font font;
 	font.loadFromFile("texture/PokemonFont.ttf");
@@ -313,9 +307,9 @@ int main()
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4210.0f, 416.0f));
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3273.0f, 414.0f));
 
-	//POKEMON MAP3
-	PokemonVector.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
-
+	//POKEMON MAP3 for point
+	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
+	PokemonVector.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
 
 	/*//TEST RANDOM SPAWNING WALKING
 	sf::Texture npc;
@@ -624,7 +618,7 @@ int main()
 			statepoke5.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
 		}
 
-		//point
+		//point pokeball
 		point.str(" ");
 		point << "pokeball :  " << countpoint;
 		Score.setString(point.str());
@@ -635,6 +629,7 @@ int main()
 			{
 				soundTake.play();
 				countpoint += 1;
+				countb += 1;
 			}
 		}
 
@@ -701,53 +696,55 @@ int main()
 		player.UpdateEnemy(deltaTime, EnemyVector);
 
 		//bulletpoke
-		if (countpoint == 1) {
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-			{
-				bulletDirection = player.getFaceDirection();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) &&
+			timer.getElapsedTime().asSeconds() >= 0.5 && countb > 0)
+		{
+			timer.restart();
+			countb--;
+			countpoint--;
+			bulletDirection = player.getFaceDirection();
 
-				checkBull = 1;
-				if (bulletDirection == 1) {
-					BulleT.attackL(pos);
-				}
-				else if (bulletDirection == 2) {
-					BulleT.attackR(pos);
-				}
-				else if (bulletDirection == 3) {
-					BulleT.attackU(pos);
-				}
-				else if (bulletDirection == 4) {
-					BulleT.attackD(pos);
-				}
+			checkBull = 1;
+			if (bulletDirection == 1) {
+				BulleT.attackL(pos);
 			}
-			if (checkBull == 1)
-			{
-				if (bulletDirection == 1) {
-					BulleT.updateLEFT(deltaTime);
-				}
-				else if (bulletDirection == 2) {
-					BulleT.updateRIGHT(deltaTime);
-				}
-				else if (bulletDirection == 3) {
-					BulleT.updateUP(deltaTime);
-				}
-				else if (bulletDirection == 4) {
-					BulleT.updateDOWN(deltaTime);
-				}
-				BulleT.draw(window);
+			else if (bulletDirection == 2) {
+				BulleT.attackR(pos);
+			}
+			else if (bulletDirection == 3) {
+				BulleT.attackU(pos);
+			}
+			else if (bulletDirection == 4) {
+				BulleT.attackD(pos);
+			}
+		}
+		if (checkBull == 1)
+		{
+			if (bulletDirection == 1) {
+				BulleT.updateLEFT(deltaTime);
+			}
+			else if (bulletDirection == 2) {
+				BulleT.updateRIGHT(deltaTime);
+			}
+			else if (bulletDirection == 3) {
+				BulleT.updateUP(deltaTime);
+			}
+			else if (bulletDirection == 4) {
+				BulleT.updateDOWN(deltaTime);
+			}
+			BulleT.draw(window);
 
-				//UPDATE Bullet Pokemon
-				for (int i = 0;i < PokemonVector.size();i++)
-				{
-					if (PokemonVector[i].isBul() == 1) {
-						BulleT.deletepoke();
-					}
+			//UPDATE Bullet Pokemon
+			for (int i = 0;i < PokemonVector.size();i++)
+			{
+				if (PokemonVector[i].isBul() == 1) {
+					BulleT.deletepoke();
 				}
 			}
-			if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
-			{
-				checkBull = 0;
-			}
+		}
+		if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
+		{
+			checkBull = 0;
 		}
 		player.Draw(window);
 
