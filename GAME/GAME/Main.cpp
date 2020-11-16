@@ -210,8 +210,10 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 3705.0f, 920.0f));
 
 
-	//point
+	//pointpokeball
 	int countpoint = 0;
+	//pointpokemon
+	int countpointpokemon = 0;
 
 	//state pokemon
 	//pokeball 0
@@ -259,11 +261,12 @@ int main()
 	//bullet
 	int checkBull = 0;
 	sf::Texture BULLET;
-	BULLET.loadFromFile("texture/pokebon.png");
-	Bulletpoke BulleT(&BULLET, sf::Vector2u(6, 1), 0.15f, 600, view.getCenter());
+	BULLET.loadFromFile("texture/pokeballspin2d.png");
+	Bulletpoke BulleT(&BULLET, sf::Vector2u(4, 1), 0.15f, 600, view.getCenter());
 	int countb = 0;
 	sf::Clock timer;
 
+	//pokeball :
 	sf::Font font;
 	font.loadFromFile("texture/PokemonFont.ttf");
 	std::ostringstream point;
@@ -272,6 +275,16 @@ int main()
 	Score.setString(point.str());
 	Score.setFont(font);
 	Score.setFillColor(sf::Color::White);
+
+	//pokemon ::
+	sf::Font font1;
+	font1.loadFromFile("texture/PokemonFont.ttf");
+	std::ostringstream pointreal;
+	sf::Text ScorePoint;
+	ScorePoint.setCharacterSize(35);
+	ScorePoint.setString(point.str());
+	ScorePoint.setFont(font1);
+	ScorePoint.setFillColor(sf::Color::White);
 
 	//Enemy
 	sf::Texture ENEMY;
@@ -633,6 +646,7 @@ int main()
 			}
 		}
 
+
 		//Update Item
 		for (int i = 0; i < itemVector.size(); i++)
 		{
@@ -652,10 +666,26 @@ int main()
 		{
 			PokemonVector1[i].update1(deltaTime);
 		}
+
 		//Update Pokemon
 		for (int i = 0; i < PokemonVector.size(); i++)
 		{
 			PokemonVector[i].update(deltaTime, BulleT);
+		}
+
+		//point pokemon
+		pointreal.str(" ");
+		pointreal << "gotcha ! :  " << countpointpokemon;
+		ScorePoint.setString(pointreal.str());
+		ScorePoint.setPosition({ view.getCenter().x + 300 ,view.getCenter().y - 335 });
+		//plus point
+		for (int i = 0; i < PokemonVector.size(); i++) {
+			if (PokemonVector[i].isBul() == 1)
+			{
+				//std::cout << "hello"<<endl;
+				countpointpokemon += 1;
+				soundTake.play();
+			}
 		}
 
 		window.clear();
@@ -703,6 +733,13 @@ int main()
 			countb--;
 			countpoint--;
 			bulletDirection = player.getFaceDirection();
+			//UPDATE Bullet Pokemon
+			for (int i = 0;i < PokemonVector.size();i++)
+			{
+				if (PokemonVector[i].isBul() == 1) {
+					BulleT.deletepoke();
+				}
+			}
 
 			checkBull = 1;
 			if (bulletDirection == 1) {
@@ -733,19 +770,12 @@ int main()
 				BulleT.updateDOWN(deltaTime);
 			}
 			BulleT.draw(window);
-
-			//UPDATE Bullet Pokemon
-			for (int i = 0;i < PokemonVector.size();i++)
-			{
-				if (PokemonVector[i].isBul() == 1) {
-					BulleT.deletepoke();
-				}
-			}
 		}
 		if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
 		{
 			checkBull = 0;
 		}
+
 		player.Draw(window);
 
 		//pokestate
@@ -814,6 +844,7 @@ int main()
 		//UNTIL THIS*/
 
 		window.draw(Score);
+		window.draw(ScorePoint);
 		window.display();
 
 		//CheckCollision
