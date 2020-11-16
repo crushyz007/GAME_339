@@ -293,13 +293,15 @@ int main()
 	ENEMY.loadFromFile("texture/mouse1.png");
 	ENEMY1.loadFromFile("texture/yellownorm1.png");
 	POKEMON1.loadFromFile("texture/cointest.png");
-	std::vector <Enemy> EnemyVector;
-	std::vector <Enemy> EnemyVector1;
+	std::vector <Enemy> EnemyVector; //LeftRight
+	std::vector <Enemy> EnemyVector1; //UpDown
 	std::vector <Enemy> PokemonVector1;
 
 	//Pokemon
 	sf::Texture POKEMON;
 	std::vector <Pokemon> PokemonVector;
+	std::vector <Pokemon> PokemonVector2; //UpDown
+	std::vector <Pokemon> PokemonVector3; //LeftRight
 	POKEMON.loadFromFile("texture/enemy.png");
 
 	//Enemies map2
@@ -321,8 +323,13 @@ int main()
 	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3273.0f, 414.0f));
 
 	//POKEMON MAP3 for point
+	//SOLID
 	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
-	PokemonVector.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
+	//LEFT-RIGHT
+	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3500.0f, 3000.0f));
+	///UP-DOWN
+	PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
+
 
 	/*//TEST RANDOM SPAWNING WALKING
 	sf::Texture npc;
@@ -672,6 +679,14 @@ int main()
 		{
 			PokemonVector[i].update(deltaTime, BulleT);
 		}
+		for (int i = 0; i < PokemonVector2.size(); i++)
+		{
+			PokemonVector2[i].update1(deltaTime, BulleT);
+		}
+		for (int i = 0; i < PokemonVector2.size(); i++)
+		{
+			PokemonVector3[i].update2(deltaTime, BulleT);
+		}
 
 		//point pokemon
 		pointreal.str(" ");
@@ -682,7 +697,20 @@ int main()
 		for (int i = 0; i < PokemonVector.size(); i++) {
 			if (PokemonVector[i].isBul() == 1)
 			{
-				//std::cout << "hello"<<endl;
+				countpointpokemon += 1;
+				soundTake.play();
+			}
+		}
+		for (int i = 0; i < PokemonVector2.size(); i++) {
+			if (PokemonVector2[i].isBul() == 1)
+			{
+				countpointpokemon += 1;
+				soundTake.play();
+			}
+		}
+		for (int i = 0; i < PokemonVector3.size(); i++) {
+			if (PokemonVector3[i].isBul() == 1)
+			{
 				countpointpokemon += 1;
 				soundTake.play();
 			}
@@ -718,6 +746,15 @@ int main()
 		for (int i = 0; i < PokemonVector.size(); i++)
 		{
 			PokemonVector[i].draw(window);
+		}
+		//add new
+		for (int i = 0; i < PokemonVector.size(); i++)
+		{
+			PokemonVector2[i].draw(window);
+		}
+		for (int i = 0; i < PokemonVector.size(); i++)
+		{
+			PokemonVector3[i].draw(window);
 		}
 
 		//UPDATE PLAYER AND ENEMY

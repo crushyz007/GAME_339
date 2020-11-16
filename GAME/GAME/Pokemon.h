@@ -11,13 +11,15 @@ public:
 	Pokemon(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float x, float y);
 	~Pokemon();
 	void update(float deltaTime, Bulletpoke BulleT);
+	void update1(float deltaTime, Bulletpoke BulleT);
+	void update2(float deltaTime, Bulletpoke BulleT);
 	void draw(sf::RenderWindow& window);
 	Collision GetCollider() { return Collision(body); }
 
 	int isBul()
 	{
-		if (countBullet == 1) {
-			countBullet--;
+		if (this->countBullet == 1) {
+			this->countBullet--;
 			return 1;
 		}
 	}
@@ -29,5 +31,8 @@ private:
 	sf::RectangleShape body;
 	Animation animation;
 	sf::Vector2f velocity;
+	float posx;
+	float posy;
+	float face;
 };
 
