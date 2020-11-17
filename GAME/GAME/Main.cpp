@@ -324,10 +324,13 @@ int main()
 
 	//POKEMON MAP3 for point
 	//SOLID
+	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 600.0f, 1000.0f));
 	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
 	//LEFT-RIGHT
+	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 650.0f, 1000.0f));
 	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3500.0f, 3000.0f));
 	///UP-DOWN
+	 PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 670.0f, 1000.0f));
 	PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
 
 
@@ -748,11 +751,11 @@ int main()
 			PokemonVector[i].draw(window);
 		}
 		//add new
-		for (int i = 0; i < PokemonVector.size(); i++)
+		for (int i = 0; i < PokemonVector2.size(); i++)
 		{
 			PokemonVector2[i].draw(window);
 		}
-		for (int i = 0; i < PokemonVector.size(); i++)
+		for (int i = 0; i < PokemonVector3.size(); i++)
 		{
 			PokemonVector3[i].draw(window);
 		}
