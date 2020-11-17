@@ -37,9 +37,11 @@ void Pokemon::update1(float deltaTime, Bulletpoke BulleT)
     velocity.x = 0.0f;
     if (posyy > this->posy + 200) {
         this->face = -1;
+        row = 1;
     }
     else if (posyy < this->posy) {
         this->face = 1;
+        row = 0;
     }
     body.move(this->face * velocity * deltaTime);
 

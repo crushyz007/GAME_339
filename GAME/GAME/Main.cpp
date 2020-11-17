@@ -299,10 +299,14 @@ int main()
 
 	//Pokemon
 	sf::Texture POKEMON;
-	std::vector <Pokemon> PokemonVector;
+	sf::Texture turtle;
+	sf::Texture dragon;
+	std::vector <Pokemon> PokemonVector; //Solid
 	std::vector <Pokemon> PokemonVector2; //UpDown
 	std::vector <Pokemon> PokemonVector3; //LeftRight
 	POKEMON.loadFromFile("texture/enemy.png");
+	turtle.loadFromFile("texture/turtlesolidsleep.png");
+	dragon.loadFromFile("texture/dragon-updown.png");
 
 	//Enemies map2
 	//////Left-Right
@@ -324,34 +328,15 @@ int main()
 
 	//POKEMON MAP3 for point
 	//SOLID
-	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 600.0f, 1000.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 650.0f, 1000.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 600.0f, 1000.0f));
 	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
 	//LEFT-RIGHT
 	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 650.0f, 1000.0f));
 	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3500.0f, 3000.0f));
 	///UP-DOWN
-	 PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 670.0f, 1000.0f));
+	 PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 670.0f, 1000.0f));
 	PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
-
-
-	/*//TEST RANDOM SPAWNING WALKING
-	sf::Texture npc;
-	npc.loadFromFile("texture/Ash1.png");
-
-	sf::Sprite NPC(npc);
-	NPC.setPosition(2900.0f,3000.0f);
-	NPC.setScale(2.0f, 2.0f);
-
-	sf::Vector2u npcsize = npc.getSize();
-	npcsize.x /= 5;
-	npcsize.y /= 4;
-
-	int npcTexturecount = 0;
-	float NPC2Speed = 0.1;
-
-	NPC.setOrigin((npcsize.x) / 2, (npcsize.y) / 2);
-	NPC.setTextureRect(sf::IntRect(0, 0, npcsize.x, npcsize.y));
-	//UNTIL THIS*/
 
 	int u = 0;
 	while (window.isOpen())
@@ -845,43 +830,6 @@ int main()
 		else if (countpoint == 23)window.draw(statepoke5);
 		else if (countpoint == 24)window.draw(statepoke5);
 		else if (countpoint == 25)window.draw(statepoke5);
-
-		/*//randomTEST
-		int randomTime, r;
-		srand(time(NULL));
-		r = rand() % 4;
-
-		if (r == 0)
-		{
-			NPC.move(-NPC2Speed, 0.0f);
-			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 1, npcsize.x, npcsize.y));
-
-		}
-		if (r == 1)
-		{
-			NPC.move(NPC2Speed, 0.0f);
-			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 3, npcsize.x, npcsize.y));
-
-		}
-		if (r == 2)
-		{
-			NPC.move(0.0f, -NPC2Speed);
-			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 2, npcsize.x, npcsize.y));
-
-		}
-		if (r == 3)
-		{
-			NPC.move(0.0f, NPC2Speed);
-			NPC.setTextureRect(sf::IntRect(npcTexturecount * npcsize.x, npcsize.y * 0, npcsize.x, npcsize.y));
-
-		}
-
-		npcTexturecount = npcTexturecount + 1;
-		if (npcTexturecount == 2) {
-			npcTexturecount = 0;
-		}
-		window.draw(NPC);
-		//UNTIL THIS*/
 
 		window.draw(Score);
 		window.draw(ScorePoint);
