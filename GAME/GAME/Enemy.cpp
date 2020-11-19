@@ -24,9 +24,11 @@ void Enemy::update(float deltaTime)
     Velocity.y = 0.0f;
     if (posxx > this->posx + 200) {
         this->face = -1;
+        row = 0;
     }
     else if (posxx < this->posx) {
         this->face = 1;
+        row = 1;
     }
     body.move(this->face * Velocity * deltaTime);
     animation.UpdateItem(row, deltaTime, faceRight);
@@ -41,9 +43,11 @@ void Enemy::update1(float deltaTime)
     Velocity.x = 0.0f;
     if (posyy > this->posy + 200) {
         this->face = -1;
+        row = 1;
     }
     else if (posyy < this->posy) {
         this->face = 1;
+        row = 0;
     }
     body.move(this->face * Velocity * deltaTime);
     animation.UpdateItem(row, deltaTime, faceRight);

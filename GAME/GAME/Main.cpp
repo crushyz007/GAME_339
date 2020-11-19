@@ -66,6 +66,13 @@ int main()
 	soundTake.setBuffer(sound);
 	soundTake.setVolume(100.0f);
 
+	//sound taking a pokemon
+	sf::SoundBuffer sound1;
+	sound1.loadFromFile("texture/Taking.wav");
+	sf::Sound soundKeep;
+	soundKeep.setBuffer(sound1);
+	soundKeep.setVolume(100.0f);
+
 	//time
 	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
@@ -290,53 +297,89 @@ int main()
 	sf::Texture ENEMY;
 	sf::Texture ENEMY1;
 	sf::Texture POKEMON1;
-	ENEMY.loadFromFile("texture/mouse1.png");
-	ENEMY1.loadFromFile("texture/yellownorm1.png");
+	ENEMY.loadFromFile("texture/enemy-lr.png");
+	ENEMY1.loadFromFile("texture/enemy-updown.png");
 	POKEMON1.loadFromFile("texture/cointest.png");
 	std::vector <Enemy> EnemyVector; //LeftRight
 	std::vector <Enemy> EnemyVector1; //UpDown
 	std::vector <Enemy> PokemonVector1;
 
 	//Pokemon
-	sf::Texture POKEMON;
+	//solid
 	sf::Texture turtle;
+	sf::Texture cabigon;
+	sf::Texture pikachu;
+	sf::Texture metamon;
+	//updown
 	sf::Texture dragon;
+	sf::Texture polliwog;
+	sf::Texture draniti;
+	sf::Texture lapras;
+	//left right
+	sf::Texture eevee;
+	sf::Texture pink;
+	sf::Texture mew;
+	sf::Texture fish;
+
 	std::vector <Pokemon> PokemonVector; //Solid
 	std::vector <Pokemon> PokemonVector2; //UpDown
 	std::vector <Pokemon> PokemonVector3; //LeftRight
-	POKEMON.loadFromFile("texture/enemy.png");
 	turtle.loadFromFile("texture/turtlesolidsleep.png");
+	cabigon.loadFromFile("texture/cabigonsolid.png");
+	pikachu.loadFromFile("texture/pikachusolid1.png");
+	metamon.loadFromFile("texture/metamonsolid.png");
 	dragon.loadFromFile("texture/dragon-updown.png");
+	polliwog.loadFromFile("texture/polliwog-updown.png");
+	draniti.loadFromFile("texture/draniti-updown.png");
+	lapras.loadFromFile("texture/lapras-updownwater.png");
+	eevee.loadFromFile("texture/eevee-lr.png");
+	pink.loadFromFile("texture/pink-lr1.png");
+	mew.loadFromFile("texture/mew-lr.png");
+	fish.loadFromFile("texture/fish-lrwater.png");
 
 	//Enemies map2
 	//////Left-Right
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2844.0f, 880.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2845.0f, 725.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 2807.0f, 227.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3407.0f, 531.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4189.0f, 220.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 2844.0f, 880.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 2845.0f, 725.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 2807.0f, 227.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 3407.0f, 531.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 4189.0f, 220.0f));
 	//EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4080.0f, 870.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3100.0f, 1340.0f));
-	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(8, 1), 0.08f, 4007.0f, 1176.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 3100.0f, 1340.0f));
+	EnemyVector.push_back(Enemy(&ENEMY, sf::Vector2u(2, 2), 0.08f, 4007.0f, 1176.0f));
 	//////Up-Down
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2703.0f, 1480.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 2790.0f, 353.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3492.0f, 1249.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4264.0f, 1143.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 4210.0f, 416.0f));
-	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(13.9, 1), 0.08f, 3273.0f, 414.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 2703.0f, 1480.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 2790.0f, 353.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 3492.0f, 1249.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 4264.0f, 1143.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 4210.0f, 416.0f));
+	EnemyVector1.push_back(Enemy(&ENEMY1, sf::Vector2u(2, 2), 0.08f, 3273.0f, 414.0f));
 
+	///////////////////////----------------------------------/////////////////////////////////
 	//POKEMON MAP3 for point
 	//SOLID
-	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 650.0f, 1000.0f));
-	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 600.0f, 1000.0f));
-	PokemonVector.push_back(Pokemon(&POKEMON, sf::Vector2u(6, 1), 0.08f, 2900.0f, 3000.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 2425.0f, 3415.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 2800.0f, 2620.0f));
+	PokemonVector.push_back(Pokemon(&cabigon, sf::Vector2u(2, 1), 1.0f, 3500.0f, 3040.0f));
+	PokemonVector.push_back(Pokemon(&cabigon, sf::Vector2u(2, 1), 1.0f, 2800.0f, 3370.0f));
+	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 4117.0f, 2752.0f));
+	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 3698.0f, 2478.0f));
+	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 3797.0f, 2973.0f));
+	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 2901.0f, 2994.0f));
 	//LEFT-RIGHT
-	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 650.0f, 1000.0f));
-	PokemonVector3.push_back(Pokemon(&ENEMY, sf::Vector2u(8, 1), 0.08f, 3500.0f, 3000.0f));
+	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3953.0f, 2463.0f));
+	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3043.0f, 2486.0f));
+	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3110.0f, 3039.0f));
+	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3635.0f, 3516.0f));
+	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3511.0f, 2673.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3670.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2950.0f, 3660.0f));
 	///UP-DOWN
-	 PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 670.0f, 1000.0f));
-	PokemonVector2.push_back(Pokemon(&POKEMON1, sf::Vector2u(6, 1), 0.08f, 3200.0f, 3000.0f));
+	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 2710.0f, 2993.0f));
+	PokemonVector2.push_back(Pokemon(&polliwog, sf::Vector2u(2, 2), 0.08f, 3510.0f, 2758.0f));
+	PokemonVector2.push_back(Pokemon(&draniti, sf::Vector2u(2, 2), 0.08f, 3992.0f, 2529.0f));
+	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 3986.0f, 3610.0f));
+	///////////////////////----------------------------------/////////////////////////////////
 
 	int u = 0;
 	while (window.isOpen())
@@ -671,7 +714,7 @@ int main()
 		{
 			PokemonVector2[i].update1(deltaTime, BulleT);
 		}
-		for (int i = 0; i < PokemonVector2.size(); i++)
+		for (int i = 0; i < PokemonVector3.size(); i++)
 		{
 			PokemonVector3[i].update2(deltaTime, BulleT);
 		}
@@ -681,26 +724,27 @@ int main()
 		pointreal << "gotcha ! :  " << countpointpokemon;
 		ScorePoint.setString(pointreal.str());
 		ScorePoint.setPosition({ view.getCenter().x + 300 ,view.getCenter().y - 335 });
+
 		//plus point
 		for (int i = 0; i < PokemonVector.size(); i++) {
 			if (PokemonVector[i].isBul() == 1)
 			{
 				countpointpokemon += 1;
-				soundTake.play();
+				soundKeep.play();
 			}
 		}
 		for (int i = 0; i < PokemonVector2.size(); i++) {
 			if (PokemonVector2[i].isBul() == 1)
 			{
 				countpointpokemon += 1;
-				soundTake.play();
+				soundKeep.play();
 			}
 		}
 		for (int i = 0; i < PokemonVector3.size(); i++) {
 			if (PokemonVector3[i].isBul() == 1)
 			{
 				countpointpokemon += 1;
-				soundTake.play();
+				soundKeep.play();
 			}
 		}
 
@@ -831,6 +875,7 @@ int main()
 		else if (countpoint == 24)window.draw(statepoke5);
 		else if (countpoint == 25)window.draw(statepoke5);
 
+
 		window.draw(Score);
 		window.draw(ScorePoint);
 		window.display();
@@ -937,4 +982,3 @@ int main()
 	}
 	return 0;
 }
-//hello
