@@ -283,7 +283,7 @@ int main()
 	Score.setFont(font);
 	Score.setFillColor(sf::Color::White);
 
-	//pokemon ::
+	//pokemon
 	sf::Font font1;
 	font1.loadFromFile("texture/PokemonFont.ttf");
 	std::ostringstream pointreal;
@@ -292,6 +292,18 @@ int main()
 	ScorePoint.setString(point.str());
 	ScorePoint.setFont(font1);
 	ScorePoint.setFillColor(sf::Color::White);
+
+	//Timer
+	int countClock = 20;
+	sf::Clock Clock1;
+	sf::Font font2;
+	font2.loadFromFile("texture/PokemonFont.ttf");
+	std::ostringstream timer1;
+	sf::Text Time;
+	Time.setCharacterSize(35);
+	Time.setString(point.str());
+	Time.setFont(font2);
+	Time.setFillColor(sf::Color::White);
 
 	//Enemy
 	sf::Texture ENEMY;
@@ -372,7 +384,7 @@ int main()
 	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3110.0f, 3039.0f));
 	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3635.0f, 3516.0f));
 	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3511.0f, 2673.0f));
-	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3670.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3591.0f));
 	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2950.0f, 3660.0f));
 	///UP-DOWN
 	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 2710.0f, 2993.0f));
@@ -381,12 +393,22 @@ int main()
 	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 3986.0f, 3610.0f));
 	///////////////////////----------------------------------/////////////////////////////////
 
+	//Time
+	bool checkMap = false;
+
 	int u = 0;
 	while (window.isOpen())
 	{
-
+		timer1.str(" ");
 		int count = player.GetPosition().x;
-
+		if (checkMap == true)
+		{
+			timer1 << "hurry up!: " << countClock - int(Clock1.getElapsedTime().asSeconds());
+			if (countClock - int(Clock1.getElapsedTime().asSeconds()) == 0)
+			{
+				window.close();
+			}
+		}
 		deltaTime = clock.restart().asSeconds();
 		sf::Vector2f pos = player.GetPosition();
 		std::cout << pos.x << ' ' << pos.y << '\n';
@@ -400,7 +422,6 @@ int main()
 				window.close();
 				break;
 			case sf::Event::Resized:
-				//ResizeView(window, view);
 				break;
 			case sf::Event::TextEntered:
 				break;
@@ -456,6 +477,7 @@ int main()
 		if ((player.GetPosition().x >= 2000 && player.GetPosition().x <= 2240) && (player.GetPosition().y >= 930 && player.GetPosition().y <= 1000)) {
 			u = 1;
 			player.Setposition(2740, 980);
+			checkMap = false;
 		}
 		if (u == 1)
 		{
@@ -505,8 +527,10 @@ int main()
 		}
 		//warp to map3
 		if ((player.GetPosition().x >= 3500 && player.GetPosition().x <= 3550) && (player.GetPosition().y >= 1750 && player.GetPosition().y <= 1830)) {
+			checkMap = true;
 			u = 2;
 			player.Setposition(3431, 2383);
+			Clock1.restart();
 		}
 		if (u == 2)
 		{
@@ -674,6 +698,7 @@ int main()
 		point << "pokeball :  " << countpoint;
 		Score.setString(point.str());
 		Score.setPosition({ view.getCenter().x - 300 ,view.getCenter().y - 335 });
+
 		//plus point
 		for (int i = 0; i < itemVector.size(); i++) {
 			if (itemVector[i].iscollide() == 1)
@@ -684,6 +709,9 @@ int main()
 			}
 		}
 
+		//Timer
+		Time.setString(timer1.str());
+		Time.setPosition({ view.getCenter().x + 40 ,view.getCenter().y - 335 });
 
 		//Update Item
 		for (int i = 0; i < itemVector.size(); i++)
@@ -802,6 +830,7 @@ int main()
 			countb--;
 			countpoint--;
 			bulletDirection = player.getFaceDirection();
+
 			//UPDATE Bullet Pokemon
 			for (int i = 0;i < PokemonVector.size();i++)
 			{
@@ -878,6 +907,7 @@ int main()
 
 		window.draw(Score);
 		window.draw(ScorePoint);
+		window.draw(Time);
 		window.display();
 
 		//CheckCollision
@@ -978,7 +1008,6 @@ int main()
 		platform96.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
-
 	}
 	return 0;
 }
