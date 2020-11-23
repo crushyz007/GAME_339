@@ -77,6 +77,38 @@ int main()
 	float deltaTime = 0.0f; //delay
 	sf::Clock clock;
 
+	//your score
+	sf::RectangleShape scorenew(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture scorenew1;
+	scorenew1.loadFromFile("texture/scorenew.png");
+	scorenew.setTexture(&scorenew1);
+
+	sf::RectangleShape scorenewmenu(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture scorenewmenu1;
+	scorenewmenu1.loadFromFile("texture/scorenewmenu.png");
+	scorenewmenu.setTexture(&scorenewmenu1);
+
+	sf::RectangleShape scorenewexit(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture scorenewexit1;
+	scorenewexit1.loadFromFile("texture/scorenewexit.png");
+	scorenewexit.setTexture(&scorenewexit1);
+
+	sf::RectangleShape scorenewhighscore(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture scorenewhighscore1;
+	scorenewhighscore1.loadFromFile("texture/scorenewhighscore.png");
+	scorenewhighscore.setTexture(&scorenewhighscore1);
+	sf::Font font3;
+	font3.loadFromFile("texture/PokemonFont.ttf");
+	std::ostringstream endgamee;
+	sf::Text endgame1;
+	endgame1.setCharacterSize(35);
+	endgame1.setString(endgamee.str());
+	endgame1.setFont(font3);
+	endgame1.setFillColor(sf::Color::White);
+
+	bool endgame = false;
+	int bonuscore = 0;
+
 	int animationFrame = 0;
 
 	//Platform
@@ -384,7 +416,7 @@ int main()
 	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3110.0f, 3039.0f));
 	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3635.0f, 3516.0f));
 	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3511.0f, 2673.0f));
-	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3591.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3891.0f));
 	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2950.0f, 3660.0f));
 	///UP-DOWN
 	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 2710.0f, 2993.0f));
@@ -399,16 +431,23 @@ int main()
 	int u = 0;
 	while (window.isOpen())
 	{
+
 		timer1.str(" ");
 		int count = player.GetPosition().x;
+		if (checkMap == false)
+		{
+			timer1 << " ";
+		}
 		if (checkMap == true)
 		{
-			timer1 << "hurry up!: " << countClock - int(Clock1.getElapsedTime().asSeconds());
+			bonuscore = countClock - int(Clock1.getElapsedTime().asSeconds());
+			timer1 << "hurry up!: " << bonuscore;
 			if (countClock - int(Clock1.getElapsedTime().asSeconds()) == 0)
 			{
-				window.close();
+				endgame = true;
 			}
 		}
+
 		deltaTime = clock.restart().asSeconds();
 		sf::Vector2f pos = player.GetPosition();
 		std::cout << pos.x << ' ' << pos.y << '\n';
@@ -427,8 +466,9 @@ int main()
 				break;
 			}
 		}
-
-		player.Update(deltaTime);
+		if (endgame == false) {
+			player.Update(deltaTime);
+		}
 		view.setCenter(player.GetPosition());
 		if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
 		{
@@ -577,11 +617,6 @@ int main()
 					view.setCenter(player.GetPosition().x, 3480.0f);
 				}
 			}
-		}
-
-		//win sound
-		if ((player.GetPosition().x >= 3363 && player.GetPosition().x <= 3473) && (player.GetPosition().y >= 3701 && player.GetPosition().y <= 3770)) {
-			soundTake.play();
 		}
 
 		//PlatformDraw
@@ -734,17 +769,19 @@ int main()
 		}
 
 		//Update Pokemon
-		for (int i = 0; i < PokemonVector.size(); i++)
-		{
-			PokemonVector[i].update(deltaTime, BulleT);
-		}
-		for (int i = 0; i < PokemonVector2.size(); i++)
-		{
-			PokemonVector2[i].update1(deltaTime, BulleT);
-		}
-		for (int i = 0; i < PokemonVector3.size(); i++)
-		{
-			PokemonVector3[i].update2(deltaTime, BulleT);
+		if (endgame == false) {
+			for (int i = 0; i < PokemonVector.size(); i++)
+			{
+				PokemonVector[i].update(deltaTime, BulleT);
+			}
+			for (int i = 0; i < PokemonVector2.size(); i++)
+			{
+				PokemonVector2[i].update1(deltaTime, BulleT);
+			}
+			for (int i = 0; i < PokemonVector3.size(); i++)
+			{
+				PokemonVector3[i].update2(deltaTime, BulleT);
+			}
 		}
 
 		//point pokemon
@@ -904,7 +941,40 @@ int main()
 		else if (countpoint == 24)window.draw(statepoke5);
 		else if (countpoint == 25)window.draw(statepoke5);
 
+		//---------------------endgamescore---------------------------------
 
+		if (endgame == true)
+		{
+			Clock1.restart();
+			endgamee.str(" ");
+			endgamee << "  " << countpointpokemon;
+			endgame1.setString(endgamee.str());
+			countClock = 0;
+			window.draw(scorenew);
+			if (sf::Mouse::getPosition(window).x >= 437 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 474 && sf::Mouse::getPosition(window).y <= 515)
+			{
+				window.draw(scorenewhighscore);
+			}
+			if (sf::Mouse::getPosition(window).x >= 487 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 617 && sf::Mouse::getPosition(window).y <= 515)
+			{
+				window.draw(scorenewmenu);
+			}
+			if (sf::Mouse::getPosition(window).x >= 628 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 663 && sf::Mouse::getPosition(window).y <= 515)
+			{
+				window.draw(scorenewexit);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					window.close();
+				}
+			}
+			window.draw(endgame1);
+			endgame1.setPosition({ view.getCenter().x - 13,view.getCenter().y + 15 });
+			scorenew.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+			scorenewhighscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+			scorenewmenu.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+			scorenewexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+
+		}
 		window.draw(Score);
 		window.draw(ScorePoint);
 		window.draw(Time);
@@ -1008,6 +1078,7 @@ int main()
 		platform96.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
 		platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
+
 	}
 	return 0;
 }
