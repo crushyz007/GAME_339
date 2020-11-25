@@ -21,7 +21,7 @@ int bulletDirection;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "SATOSHI!", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "POKEMON GO!", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1080, 720));
 
 	//ash
@@ -108,6 +108,34 @@ int main()
 
 	bool endgame = false;
 	int bonuscore = 0;
+
+	//----------------------------------------------------Menu-----------------------------------------------------
+	bool menu = true;
+	bool start = false;
+	sf::RectangleShape menufinal(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture menu1;
+	menu1.loadFromFile("texture/menufinalize.png");
+	menufinal.setTexture(&menu1);
+
+	sf::RectangleShape menuplay(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture menuplay1;
+	menuplay1.loadFromFile("texture/menuplay.png");
+	menuplay.setTexture(&menuplay1);
+
+	sf::RectangleShape menuscore(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture menuscore1;
+	menuscore1.loadFromFile("texture/menuscore.png");
+	menuscore.setTexture(&menuscore1);
+
+	sf::RectangleShape menuexit(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture menuexit1;
+	menuexit1.loadFromFile("texture/menuexit.png");
+	menuexit.setTexture(&menuexit1);
+
+	sf::RectangleShape menuhowto(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture menuhowto1;
+	menuhowto1.loadFromFile("texture/menuhowto.png");
+	menuhowto.setTexture(&menuhowto1);
 
 	int animationFrame = 0;
 
@@ -429,131 +457,136 @@ int main()
 	bool checkMap = false;
 
 	int u = 0;
+
 	while (window.isOpen())
 	{
+		while (menu == true)
+		{
+			//mouse position
+			sf::Vector2f mouesPosition = sf::Vector2f(0.0f, 0.0f);
+			mouesPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << endl;
 
-		timer1.str(" ");
-		int count = player.GetPosition().x;
-		if (checkMap == false)
-		{
-			timer1 << " ";
-		}
-		if (checkMap == true)
-		{
-			bonuscore = countClock - int(Clock1.getElapsedTime().asSeconds());
-			timer1 << "hurry up!: " << bonuscore;
-			if (countClock - int(Clock1.getElapsedTime().asSeconds()) == 0)
+			sf::Event event;
+			while (window.pollEvent(event))
 			{
-				endgame = true;
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					window.close();
+					break;
+				case sf::Event::Resized:
+					break;
+				case sf::Event::TextEntered:
+					break;
+				}
 			}
-		}
-
-		deltaTime = clock.restart().asSeconds();
-		sf::Vector2f pos = player.GetPosition();
-		std::cout << pos.x << ' ' << pos.y << '\n';
-		deltaTime = clock.restart().asSeconds();
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			switch (event.type)
+			window.draw(menufinal);
+			if (sf::Mouse::getPosition(window).x >= 642 && sf::Mouse::getPosition(window).y >= 257 && sf::Mouse::getPosition(window).x <= 792 && sf::Mouse::getPosition(window).y <= 307)
 			{
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::Resized:
-				break;
-			case sf::Event::TextEntered:
-				break;
+				//play
+				window.draw(menuplay);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					menu = false;
+					start = true;
+				}
 			}
-		}
-		if (endgame == false) {
-			player.Update(deltaTime);
-		}
-		view.setCenter(player.GetPosition());
-		if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
+			if (sf::Mouse::getPosition(window).x >= 738 && sf::Mouse::getPosition(window).y >= 338 && sf::Mouse::getPosition(window).x <= 919 && sf::Mouse::getPosition(window).y <= 376)
 			{
-				view.setCenter(540.0f, 360.0f);//window
+				//leaderboard
+				window.draw(menuscore);
 			}
-			if (view.getCenter().y + 360.0f >= 1920.0f)
+			if (sf::Mouse::getPosition(window).x >= 1003 && sf::Mouse::getPosition(window).y >= 58 && sf::Mouse::getPosition(window).x <= 1034 && sf::Mouse::getPosition(window).y <= 95)
 			{
-				view.setCenter(540.0f, 1560.0f);//window
+				//howtoplay
+				window.draw(menuhowto);
 			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
+			if (sf::Mouse::getPosition(window).x >= 877 && sf::Mouse::getPosition(window).y >= 257 && sf::Mouse::getPosition(window).x <= 1025 && sf::Mouse::getPosition(window).y <= 307)
 			{
-				view.setCenter(540.0f, player.GetPosition().y);
+				//exit
+				window.draw(menuexit);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					window.close();
+				}
 			}
+			window.display();
 
 		}
-		if (view.getCenter().x + 540.0f >= 2280.0f) //between lawang lao
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
-			{
-				view.setCenter(1740.0f, 360.0f);
-			}
-			if (view.getCenter().y + 360.0f >= 1920.0f)
-			{
-				view.setCenter(1740.0f, 1560.0f);
-			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
-			{
-				view.setCenter(1740.0f, player.GetPosition().y);
-			}
-		}
-		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 2280.0f) //up down mid nidnoi
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
-			{
-				view.setCenter(player.GetPosition().x, 360.0f);
-			}
-			if (view.getCenter().y + 360.0f >= 1920.0f)
-			{
-				view.setCenter(player.GetPosition().x, 1560.0f);
-			}
-		}
+		while (start == true) {
 
-		//warp to map2
-		if ((player.GetPosition().x >= 2000 && player.GetPosition().x <= 2240) && (player.GetPosition().y >= 930 && player.GetPosition().y <= 1000)) {
-			u = 1;
-			player.Setposition(2740, 980);
-			checkMap = false;
-		}
-		if (u == 1)
-		{
+			timer1.str(" ");
+			int count = player.GetPosition().x;
+			if (checkMap == false)
+			{
+				timer1 << " ";
+			}
+			if (checkMap == true)
+			{
+				bonuscore = countClock - int(Clock1.getElapsedTime().asSeconds());
+				timer1 << "hurry up!: " << bonuscore;
+				if (countClock - int(Clock1.getElapsedTime().asSeconds()) == 0)
+				{
+					endgame = true;
+				}
+			}
+
+			deltaTime = clock.restart().asSeconds();
+			sf::Vector2f pos = player.GetPosition();
+			std::cout << pos.x << ' ' << pos.y << '\n';
+
+			deltaTime = clock.restart().asSeconds();
+			sf::Event event;
+			while (window.pollEvent(event))
+			{
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					window.close();
+					break;
+				case sf::Event::Resized:
+					break;
+				case sf::Event::TextEntered:
+					break;
+				}
+			}
+			if (endgame == false) {
+				player.Update(deltaTime);
+			}
 			view.setCenter(player.GetPosition());
-			if (view.getCenter().x - 540.0f <= 2300.0f)//left
+			if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
 			{
 				if (view.getCenter().y - 360.0f <= 0.0f)
 				{
-					view.setCenter(2840.0f, 360.0f);//window
+					view.setCenter(540.0f, 360.0f);//window
 				}
 				if (view.getCenter().y + 360.0f >= 1920.0f)
 				{
-					view.setCenter(2840.0f, 1560.0f);//window
+					view.setCenter(540.0f, 1560.0f);//window
 				}
 				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 				{
-					view.setCenter(2840.0f, player.GetPosition().y);
+					view.setCenter(540.0f, player.GetPosition().y);
 				}
 
 			}
-			if (view.getCenter().x + 540.0f >= 4580.0f) //right
+			if (view.getCenter().x + 540.0f >= 2280.0f) //between lawang lao
 			{
 				if (view.getCenter().y - 360.0f <= 0.0f)
 				{
-					view.setCenter(4040.0f, 360.0f);
+					view.setCenter(1740.0f, 360.0f);
 				}
 				if (view.getCenter().y + 360.0f >= 1920.0f)
 				{
-					view.setCenter(4040.0f, 1560.0f);
+					view.setCenter(1740.0f, 1560.0f);
 				}
 				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
 				{
-					view.setCenter(4040.0f, player.GetPosition().y);
+					view.setCenter(1740.0f, player.GetPosition().y);
 				}
 			}
-			if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
+			if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 2280.0f) //up down mid nidnoi
 			{
 				if (view.getCenter().y - 360.0f <= 0.0f)
 				{
@@ -564,521 +597,578 @@ int main()
 					view.setCenter(player.GetPosition().x, 1560.0f);
 				}
 			}
-		}
-		//warp to map3
-		if ((player.GetPosition().x >= 3500 && player.GetPosition().x <= 3550) && (player.GetPosition().y >= 1750 && player.GetPosition().y <= 1830)) {
-			checkMap = true;
-			u = 2;
-			player.Setposition(3431, 2383);
-			Clock1.restart();
-		}
-		if (u == 2)
-		{
-			view.setCenter(player.GetPosition());
-			if (view.getCenter().x - 540.0f <= 2305.0f)//left
-			{
-				if (view.getCenter().y - 360.0f <= 0.0f)
-				{
-					view.setCenter(2845.0f, 360.0f);//window
-				}
-				if (view.getCenter().y + 360.0f >= 3840.0f)
-				{
-					view.setCenter(2845.0f, 3480.0f);//window
-				}
-				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
-				{
-					view.setCenter(2845.0f, player.GetPosition().y);
-				}
 
+			//warp to map2
+			if ((player.GetPosition().x >= 2000 && player.GetPosition().x <= 2240) && (player.GetPosition().y >= 930 && player.GetPosition().y <= 1000)) {
+				u = 1;
+				player.Setposition(2740, 980);
+				checkMap = false;
 			}
-			if (view.getCenter().x + 540.0f >= 4580.0f) //right
+			if (u == 1)
 			{
-				if (view.getCenter().y - 360.0f <= 0.0f)
+				view.setCenter(player.GetPosition());
+				if (view.getCenter().x - 540.0f <= 2300.0f)//left
 				{
-					view.setCenter(4040.0f, 360.0f);
+					if (view.getCenter().y - 360.0f <= 0.0f)
+					{
+						view.setCenter(2840.0f, 360.0f);//window
+					}
+					if (view.getCenter().y + 360.0f >= 1920.0f)
+					{
+						view.setCenter(2840.0f, 1560.0f);//window
+					}
+					if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
+					{
+						view.setCenter(2840.0f, player.GetPosition().y);
+					}
+
 				}
-				if (view.getCenter().y + 360.0f >= 3840.0f)
+				if (view.getCenter().x + 540.0f >= 4580.0f) //right
 				{
-					view.setCenter(4040.0f, 3480.0f);
+					if (view.getCenter().y - 360.0f <= 0.0f)
+					{
+						view.setCenter(4040.0f, 360.0f);
+					}
+					if (view.getCenter().y + 360.0f >= 1920.0f)
+					{
+						view.setCenter(4040.0f, 1560.0f);
+					}
+					if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1920.0f)
+					{
+						view.setCenter(4040.0f, player.GetPosition().y);
+					}
 				}
-				if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
+				if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
 				{
-					view.setCenter(4040.0f, player.GetPosition().y);
+					if (view.getCenter().y - 360.0f <= 0.0f)
+					{
+						view.setCenter(player.GetPosition().x, 360.0f);
+					}
+					if (view.getCenter().y + 360.0f >= 1920.0f)
+					{
+						view.setCenter(player.GetPosition().x, 1560.0f);
+					}
 				}
 			}
-			if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
+			//warp to map3
+			if ((player.GetPosition().x >= 3500 && player.GetPosition().x <= 3550) && (player.GetPosition().y >= 1750 && player.GetPosition().y <= 1830)) {
+				checkMap = true;
+				u = 2;
+				player.Setposition(3431, 2383);
+				Clock1.restart();
+			}
+			if (u == 2)
 			{
-				if (view.getCenter().y - 360.0f <= 2098.0f)
+				view.setCenter(player.GetPosition());
+				if (view.getCenter().x - 540.0f <= 2305.0f)//left
 				{
-					view.setCenter(player.GetPosition().x, 2460.0f);
+					if (view.getCenter().y - 360.0f <= 0.0f)
+					{
+						view.setCenter(2845.0f, 360.0f);//window
+					}
+					if (view.getCenter().y + 360.0f >= 3840.0f)
+					{
+						view.setCenter(2845.0f, 3480.0f);//window
+					}
+					if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
+					{
+						view.setCenter(2845.0f, player.GetPosition().y);
+					}
+
 				}
-				if (view.getCenter().y + 360.0f >= 3840.0f)
+				if (view.getCenter().x + 540.0f >= 4580.0f) //right
 				{
-					view.setCenter(player.GetPosition().x, 3480.0f);
+					if (view.getCenter().y - 360.0f <= 0.0f)
+					{
+						view.setCenter(4040.0f, 360.0f);
+					}
+					if (view.getCenter().y + 360.0f >= 3840.0f)
+					{
+						view.setCenter(4040.0f, 3480.0f);
+					}
+					if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 3840.0f)
+					{
+						view.setCenter(4040.0f, player.GetPosition().y);
+					}
+				}
+				if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 4580.0f) //down
+				{
+					if (view.getCenter().y - 360.0f <= 2098.0f)
+					{
+						view.setCenter(player.GetPosition().x, 2460.0f);
+					}
+					if (view.getCenter().y + 360.0f >= 3840.0f)
+					{
+						view.setCenter(player.GetPosition().x, 3480.0f);
+					}
 				}
 			}
-		}
 
-		//PlatformDraw
-		platform1.Draw(window);
-		platform2.Draw(window);
-		platform3.Draw(window);
-		platform4.Draw(window);
-		platform5.Draw(window);
-		platform6.Draw(window);
-		platform7.Draw(window);
-		platform8.Draw(window);
-		platform9.Draw(window);
-		platform10.Draw(window);
-		platform11.Draw(window);
-		platform12.Draw(window);
-		platform13.Draw(window);
-		platform14.Draw(window);
-		platform15.Draw(window);
-		platform16.Draw(window);
-		platform17.Draw(window);
-		platform18.Draw(window);
-		platform19.Draw(window);
-		platform20.Draw(window);
-		platform21.Draw(window);
-		platform22.Draw(window);
-		platform23.Draw(window);
-		platform24.Draw(window);
-		platform25.Draw(window);
-		platform26.Draw(window);
-		platform27.Draw(window);
-		platform28.Draw(window);
-		platform29.Draw(window);
-		platform30.Draw(window);
-		platform31.Draw(window);
-		platform32.Draw(window);
-		platform33.Draw(window);
-		platform34.Draw(window);
-		platform35.Draw(window);
-		platform36.Draw(window);
-		platform37.Draw(window);
-		platform38.Draw(window);
-		platform39.Draw(window);
-		platform40.Draw(window);
-		platform41.Draw(window);
-		platform42.Draw(window);
-		platform43.Draw(window);
-		platform44.Draw(window);
-		platform45.Draw(window);
-		platform46.Draw(window);
-		platform47.Draw(window);
-		platform48.Draw(window);
-		platform49.Draw(window);
-		platform50.Draw(window);
-		platform51.Draw(window);
-		platform52.Draw(window);
-		platform53.Draw(window);
-		platform54.Draw(window);
-		platform55.Draw(window);
-		platform56.Draw(window);
-		platform57.Draw(window);
-		platform58.Draw(window);
-		platform59.Draw(window);
-		platform60.Draw(window);
-		platform61.Draw(window);
-		platform62.Draw(window);
-		platform63.Draw(window);
-		platform64.Draw(window);
-		platform65.Draw(window);
-		platform66.Draw(window);
-		platform67.Draw(window);
-		platform68.Draw(window);
-		platform69.Draw(window);
-		platform70.Draw(window);
-		platform71.Draw(window);
-		platform72.Draw(window);
-		platform73.Draw(window);
-		platform74.Draw(window);
-		platform75.Draw(window);
-		platform76.Draw(window);
-		platform77.Draw(window);
-		platform79.Draw(window);
-		platform80.Draw(window);
-		//platform81.Draw(window);
-		platform82.Draw(window);
-		//platform83.Draw(window);
-		platform84.Draw(window);
-		platform85.Draw(window);
-		platform86.Draw(window);
-		platform87.Draw(window);
-		platform88.Draw(window);
-		platform89.Draw(window);
-		platform90.Draw(window);
-		platform91.Draw(window);
-		platform92.Draw(window);
-		platform93.Draw(window);
-		platform94.Draw(window);
-		platform95.Draw(window);
-		platform96.Draw(window);
-		platform97.Draw(window);
-		platform98.Draw(window);
+			//PlatformDraw
+			platform1.Draw(window);
+			platform2.Draw(window);
+			platform3.Draw(window);
+			platform4.Draw(window);
+			platform5.Draw(window);
+			platform6.Draw(window);
+			platform7.Draw(window);
+			platform8.Draw(window);
+			platform9.Draw(window);
+			platform10.Draw(window);
+			platform11.Draw(window);
+			platform12.Draw(window);
+			platform13.Draw(window);
+			platform14.Draw(window);
+			platform15.Draw(window);
+			platform16.Draw(window);
+			platform17.Draw(window);
+			platform18.Draw(window);
+			platform19.Draw(window);
+			platform20.Draw(window);
+			platform21.Draw(window);
+			platform22.Draw(window);
+			platform23.Draw(window);
+			platform24.Draw(window);
+			platform25.Draw(window);
+			platform26.Draw(window);
+			platform27.Draw(window);
+			platform28.Draw(window);
+			platform29.Draw(window);
+			platform30.Draw(window);
+			platform31.Draw(window);
+			platform32.Draw(window);
+			platform33.Draw(window);
+			platform34.Draw(window);
+			platform35.Draw(window);
+			platform36.Draw(window);
+			platform37.Draw(window);
+			platform38.Draw(window);
+			platform39.Draw(window);
+			platform40.Draw(window);
+			platform41.Draw(window);
+			platform42.Draw(window);
+			platform43.Draw(window);
+			platform44.Draw(window);
+			platform45.Draw(window);
+			platform46.Draw(window);
+			platform47.Draw(window);
+			platform48.Draw(window);
+			platform49.Draw(window);
+			platform50.Draw(window);
+			platform51.Draw(window);
+			platform52.Draw(window);
+			platform53.Draw(window);
+			platform54.Draw(window);
+			platform55.Draw(window);
+			platform56.Draw(window);
+			platform57.Draw(window);
+			platform58.Draw(window);
+			platform59.Draw(window);
+			platform60.Draw(window);
+			platform61.Draw(window);
+			platform62.Draw(window);
+			platform63.Draw(window);
+			platform64.Draw(window);
+			platform65.Draw(window);
+			platform66.Draw(window);
+			platform67.Draw(window);
+			platform68.Draw(window);
+			platform69.Draw(window);
+			platform70.Draw(window);
+			platform71.Draw(window);
+			platform72.Draw(window);
+			platform73.Draw(window);
+			platform74.Draw(window);
+			platform75.Draw(window);
+			platform76.Draw(window);
+			platform77.Draw(window);
+			platform79.Draw(window);
+			platform80.Draw(window);
+			//platform81.Draw(window);
+			platform82.Draw(window);
+			//platform83.Draw(window);
+			platform84.Draw(window);
+			platform85.Draw(window);
+			platform86.Draw(window);
+			platform87.Draw(window);
+			platform88.Draw(window);
+			platform89.Draw(window);
+			platform90.Draw(window);
+			platform91.Draw(window);
+			platform92.Draw(window);
+			platform93.Draw(window);
+			platform94.Draw(window);
+			platform95.Draw(window);
+			platform96.Draw(window);
+			platform97.Draw(window);
+			platform98.Draw(window);
 
-		//pokeview
-		if (pos.x > 210) {
-			statepoke.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-			statepoke1.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-			statepoke2.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-			statepoke3.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-			statepoke4.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-			statepoke5.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
-		}
-
-		//point pokeball
-		point.str(" ");
-		point << "pokeball :  " << countpoint;
-		Score.setString(point.str());
-		Score.setPosition({ view.getCenter().x - 300 ,view.getCenter().y - 335 });
-
-		//plus point
-		for (int i = 0; i < itemVector.size(); i++) {
-			if (itemVector[i].iscollide() == 1)
-			{
-				soundTake.play();
-				countpoint += 1;
-				countb += 1;
+			//pokeview
+			if (pos.x > 210) {
+				statepoke.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+				statepoke1.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+				statepoke2.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+				statepoke3.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+				statepoke4.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
+				statepoke5.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 360));
 			}
-		}
 
-		//Timer
-		Time.setString(timer1.str());
-		Time.setPosition({ view.getCenter().x + 40 ,view.getCenter().y - 335 });
+			//point pokeball
+			point.str(" ");
+			point << "pokeball :  " << countpoint;
+			Score.setString(point.str());
+			Score.setPosition({ view.getCenter().x - 300 ,view.getCenter().y - 335 });
 
-		//Update Item
-		for (int i = 0; i < itemVector.size(); i++)
-		{
-			itemVector[i].update(deltaTime, player);
-		}
+			//plus point
+			for (int i = 0; i < itemVector.size(); i++) {
+				if (itemVector[i].iscollide() == 1)
+				{
+					soundTake.play();
+					countpoint += 1;
+					countb += 1;
+				}
+			}
 
-		//Update Enemy
-		for (int i = 0; i < EnemyVector.size(); i++)
-		{
-			EnemyVector[i].update(deltaTime);
-		}
-		for (int i = 0; i < EnemyVector1.size(); i++)
-		{
-			EnemyVector1[i].update1(deltaTime);
-		}
-		for (int i = 0; i < PokemonVector1.size(); i++)
-		{
-			PokemonVector1[i].update1(deltaTime);
-		}
+			//Timer
+			Time.setString(timer1.str());
+			Time.setPosition({ view.getCenter().x + 40 ,view.getCenter().y - 335 });
 
-		//Update Pokemon
-		if (endgame == false) {
+			//Update Item
+			for (int i = 0; i < itemVector.size(); i++)
+			{
+				itemVector[i].update(deltaTime, player);
+			}
+
+			//Update Enemy
+			for (int i = 0; i < EnemyVector.size(); i++)
+			{
+				EnemyVector[i].update(deltaTime);
+			}
+			for (int i = 0; i < EnemyVector1.size(); i++)
+			{
+				EnemyVector1[i].update1(deltaTime);
+			}
+			for (int i = 0; i < PokemonVector1.size(); i++)
+			{
+				PokemonVector1[i].update1(deltaTime);
+			}
+
+			//Update Pokemon
+			if (endgame == false) {
+				for (int i = 0; i < PokemonVector.size(); i++)
+				{
+					PokemonVector[i].update(deltaTime, BulleT);
+				}
+				for (int i = 0; i < PokemonVector2.size(); i++)
+				{
+					PokemonVector2[i].update1(deltaTime, BulleT);
+				}
+				for (int i = 0; i < PokemonVector3.size(); i++)
+				{
+					PokemonVector3[i].update2(deltaTime, BulleT);
+				}
+			}
+
+			//point pokemon
+			pointreal.str(" ");
+			pointreal << "gotcha ! :  " << countpointpokemon;
+			ScorePoint.setString(pointreal.str());
+			ScorePoint.setPosition({ view.getCenter().x + 300 ,view.getCenter().y - 335 });
+
+			//plus point
+			for (int i = 0; i < PokemonVector.size(); i++) {
+				if (PokemonVector[i].isBul() == 1)
+				{
+					countpointpokemon += 1;
+					soundKeep.play();
+				}
+			}
+			for (int i = 0; i < PokemonVector2.size(); i++) {
+				if (PokemonVector2[i].isBul() == 1)
+				{
+					countpointpokemon += 1;
+					soundKeep.play();
+				}
+			}
+			for (int i = 0; i < PokemonVector3.size(); i++) {
+				if (PokemonVector3[i].isBul() == 1)
+				{
+					countpointpokemon += 1;
+					soundKeep.play();
+				}
+			}
+
+			window.clear();
+			window.setView(view);
+			window.draw(bg);
+			window.draw(bg2);
+			window.draw(bg3);
+
+			//Draw Item
+			for (int i = 0; i < itemVector.size(); i++)
+			{
+				itemVector[i].draw(window);
+			}
+
+			//Draw Enemy
+			for (int i = 0; i < EnemyVector.size(); i++)
+			{
+				EnemyVector[i].draw(window);
+			}
+			for (int i = 0; i < EnemyVector1.size(); i++)
+			{
+				EnemyVector1[i].draw(window);
+			}
+			for (int i = 0; i < PokemonVector1.size(); i++)
+			{
+				PokemonVector1[i].draw(window);
+			}
+
+			//Draw Pokemon
 			for (int i = 0; i < PokemonVector.size(); i++)
 			{
-				PokemonVector[i].update(deltaTime, BulleT);
+				PokemonVector[i].draw(window);
 			}
+			//add new
 			for (int i = 0; i < PokemonVector2.size(); i++)
 			{
-				PokemonVector2[i].update1(deltaTime, BulleT);
+				PokemonVector2[i].draw(window);
 			}
 			for (int i = 0; i < PokemonVector3.size(); i++)
 			{
-				PokemonVector3[i].update2(deltaTime, BulleT);
+				PokemonVector3[i].draw(window);
 			}
-		}
 
-		//point pokemon
-		pointreal.str(" ");
-		pointreal << "gotcha ! :  " << countpointpokemon;
-		ScorePoint.setString(pointreal.str());
-		ScorePoint.setPosition({ view.getCenter().x + 300 ,view.getCenter().y - 335 });
+			//UPDATE PLAYER AND ENEMY
+			player.UpdatePokemon1(deltaTime, PokemonVector1);
+			player.UpdateEnemy1(deltaTime, EnemyVector1);
+			player.UpdateEnemy(deltaTime, EnemyVector);
 
-		//plus point
-		for (int i = 0; i < PokemonVector.size(); i++) {
-			if (PokemonVector[i].isBul() == 1)
+			//bulletpoke
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) &&
+				timer.getElapsedTime().asSeconds() >= 0.5 && countb > 0)
 			{
-				countpointpokemon += 1;
-				soundKeep.play();
-			}
-		}
-		for (int i = 0; i < PokemonVector2.size(); i++) {
-			if (PokemonVector2[i].isBul() == 1)
-			{
-				countpointpokemon += 1;
-				soundKeep.play();
-			}
-		}
-		for (int i = 0; i < PokemonVector3.size(); i++) {
-			if (PokemonVector3[i].isBul() == 1)
-			{
-				countpointpokemon += 1;
-				soundKeep.play();
-			}
-		}
+				timer.restart();
+				countb--;
+				countpoint--;
+				bulletDirection = player.getFaceDirection();
 
-		window.clear();
-		window.setView(view);
-		window.draw(bg);
-		window.draw(bg2);
-		window.draw(bg3);
-
-		//Draw Item
-		for (int i = 0; i < itemVector.size(); i++)
-		{
-			itemVector[i].draw(window);
-		}
-
-		//Draw Enemy
-		for (int i = 0; i < EnemyVector.size(); i++)
-		{
-			EnemyVector[i].draw(window);
-		}
-		for (int i = 0; i < EnemyVector1.size(); i++)
-		{
-			EnemyVector1[i].draw(window);
-		}
-		for (int i = 0; i < PokemonVector1.size(); i++)
-		{
-			PokemonVector1[i].draw(window);
-		}
-
-		//Draw Pokemon
-		for (int i = 0; i < PokemonVector.size(); i++)
-		{
-			PokemonVector[i].draw(window);
-		}
-		//add new
-		for (int i = 0; i < PokemonVector2.size(); i++)
-		{
-			PokemonVector2[i].draw(window);
-		}
-		for (int i = 0; i < PokemonVector3.size(); i++)
-		{
-			PokemonVector3[i].draw(window);
-		}
-
-		//UPDATE PLAYER AND ENEMY
-		player.UpdatePokemon1(deltaTime, PokemonVector1);
-		player.UpdateEnemy1(deltaTime, EnemyVector1);
-		player.UpdateEnemy(deltaTime, EnemyVector);
-
-		//bulletpoke
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) &&
-			timer.getElapsedTime().asSeconds() >= 0.5 && countb > 0)
-		{
-			timer.restart();
-			countb--;
-			countpoint--;
-			bulletDirection = player.getFaceDirection();
-
-			//UPDATE Bullet Pokemon
-			for (int i = 0;i < PokemonVector.size();i++)
-			{
-				if (PokemonVector[i].isBul() == 1) {
-					BulleT.deletepoke();
-				}
-			}
-
-			checkBull = 1;
-			if (bulletDirection == 1) {
-				BulleT.attackL(pos);
-			}
-			else if (bulletDirection == 2) {
-				BulleT.attackR(pos);
-			}
-			else if (bulletDirection == 3) {
-				BulleT.attackU(pos);
-			}
-			else if (bulletDirection == 4) {
-				BulleT.attackD(pos);
-			}
-		}
-		if (checkBull == 1)
-		{
-			if (bulletDirection == 1) {
-				BulleT.updateLEFT(deltaTime);
-			}
-			else if (bulletDirection == 2) {
-				BulleT.updateRIGHT(deltaTime);
-			}
-			else if (bulletDirection == 3) {
-				BulleT.updateUP(deltaTime);
-			}
-			else if (bulletDirection == 4) {
-				BulleT.updateDOWN(deltaTime);
-			}
-			BulleT.draw(window);
-		}
-		if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
-		{
-			checkBull = 0;
-		}
-
-		player.Draw(window);
-
-		//pokestate
-		window.draw(statepoke);
-		if (countpoint == 1)window.draw(statepoke1);
-		else if (countpoint == 2)window.draw(statepoke2);
-		else if (countpoint == 3)window.draw(statepoke3);
-		else if (countpoint == 4)window.draw(statepoke4);
-		else if (countpoint == 5)window.draw(statepoke5);
-		else if (countpoint == 6)window.draw(statepoke5);
-		else if (countpoint == 7)window.draw(statepoke5);
-		else if (countpoint == 8)window.draw(statepoke5);
-		else if (countpoint == 9)window.draw(statepoke5);
-		else if (countpoint == 10)window.draw(statepoke5);
-		else if (countpoint == 11)window.draw(statepoke5);
-		else if (countpoint == 12)window.draw(statepoke5);
-		else if (countpoint == 13)window.draw(statepoke5);
-		else if (countpoint == 14)window.draw(statepoke5);
-		else if (countpoint == 15)window.draw(statepoke5);
-		else if (countpoint == 16)window.draw(statepoke5);
-		else if (countpoint == 17)window.draw(statepoke5);
-		else if (countpoint == 18)window.draw(statepoke5);
-		else if (countpoint == 19)window.draw(statepoke5);
-		else if (countpoint == 20)window.draw(statepoke5);
-		else if (countpoint == 21)window.draw(statepoke5);
-		else if (countpoint == 22)window.draw(statepoke5);
-		else if (countpoint == 23)window.draw(statepoke5);
-		else if (countpoint == 24)window.draw(statepoke5);
-		else if (countpoint == 25)window.draw(statepoke5);
-
-		//---------------------endgamescore---------------------------------
-
-		if (endgame == true)
-		{
-			Clock1.restart();
-			endgamee.str(" ");
-			endgamee << "  " << countpointpokemon;
-			endgame1.setString(endgamee.str());
-			countClock = 0;
-			window.draw(scorenew);
-			if (sf::Mouse::getPosition(window).x >= 437 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 474 && sf::Mouse::getPosition(window).y <= 515)
-			{
-				window.draw(scorenewhighscore);
-			}
-			if (sf::Mouse::getPosition(window).x >= 487 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 617 && sf::Mouse::getPosition(window).y <= 515)
-			{
-				window.draw(scorenewmenu);
-			}
-			if (sf::Mouse::getPosition(window).x >= 628 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 663 && sf::Mouse::getPosition(window).y <= 515)
-			{
-				window.draw(scorenewexit);
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				//UPDATE Bullet Pokemon
+				for (int i = 0;i < PokemonVector.size();i++)
 				{
-					window.close();
+					if (PokemonVector[i].isBul() == 1) {
+						BulleT.deletepoke();
+					}
+				}
+
+				checkBull = 1;
+				if (bulletDirection == 1) {
+					BulleT.attackL(pos);
+				}
+				else if (bulletDirection == 2) {
+					BulleT.attackR(pos);
+				}
+				else if (bulletDirection == 3) {
+					BulleT.attackU(pos);
+				}
+				else if (bulletDirection == 4) {
+					BulleT.attackD(pos);
 				}
 			}
-			window.draw(endgame1);
-			endgame1.setPosition({ view.getCenter().x - 13,view.getCenter().y + 15 });
-			scorenew.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-			scorenewhighscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-			scorenewmenu.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-			scorenewexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+			if (checkBull == 1)
+			{
+				if (bulletDirection == 1) {
+					BulleT.updateLEFT(deltaTime);
+				}
+				else if (bulletDirection == 2) {
+					BulleT.updateRIGHT(deltaTime);
+				}
+				else if (bulletDirection == 3) {
+					BulleT.updateUP(deltaTime);
+				}
+				else if (bulletDirection == 4) {
+					BulleT.updateDOWN(deltaTime);
+				}
+				BulleT.draw(window);
+			}
+			if (abs(player.GetPosition().x - BulleT.GetPosition().x >= 1000.0f || abs(player.GetPosition().y) - BulleT.GetPosition().y >= 1000.0f))
+			{
+				checkBull = 0;
+			}
 
+			player.Draw(window);
+
+			//pokestate
+			window.draw(statepoke);
+			if (countpoint == 1)window.draw(statepoke1);
+			else if (countpoint == 2)window.draw(statepoke2);
+			else if (countpoint == 3)window.draw(statepoke3);
+			else if (countpoint == 4)window.draw(statepoke4);
+			else if (countpoint == 5)window.draw(statepoke5);
+			else if (countpoint == 6)window.draw(statepoke5);
+			else if (countpoint == 7)window.draw(statepoke5);
+			else if (countpoint == 8)window.draw(statepoke5);
+			else if (countpoint == 9)window.draw(statepoke5);
+			else if (countpoint == 10)window.draw(statepoke5);
+			else if (countpoint == 11)window.draw(statepoke5);
+			else if (countpoint == 12)window.draw(statepoke5);
+			else if (countpoint == 13)window.draw(statepoke5);
+			else if (countpoint == 14)window.draw(statepoke5);
+			else if (countpoint == 15)window.draw(statepoke5);
+			else if (countpoint == 16)window.draw(statepoke5);
+			else if (countpoint == 17)window.draw(statepoke5);
+			else if (countpoint == 18)window.draw(statepoke5);
+			else if (countpoint == 19)window.draw(statepoke5);
+			else if (countpoint == 20)window.draw(statepoke5);
+			else if (countpoint == 21)window.draw(statepoke5);
+			else if (countpoint == 22)window.draw(statepoke5);
+			else if (countpoint == 23)window.draw(statepoke5);
+			else if (countpoint == 24)window.draw(statepoke5);
+			else if (countpoint == 25)window.draw(statepoke5);
+
+			//---------------------endgamescore---------------------------------
+
+			if (endgame == true)
+			{
+				Clock1.restart();
+				endgamee.str(" ");
+				endgamee << "  " << countpointpokemon;
+				endgame1.setString(endgamee.str());
+				countClock = 0;
+				window.draw(scorenew);
+				if (sf::Mouse::getPosition(window).x >= 437 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 474 && sf::Mouse::getPosition(window).y <= 515)
+				{
+					window.draw(scorenewhighscore);
+				}
+				if (sf::Mouse::getPosition(window).x >= 487 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 617 && sf::Mouse::getPosition(window).y <= 515)
+				{
+					window.draw(scorenewmenu);
+					/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						menu = true;
+						start = false;
+					}*/
+				}
+				if (sf::Mouse::getPosition(window).x >= 628 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 663 && sf::Mouse::getPosition(window).y <= 515)
+				{
+					window.draw(scorenewexit);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						window.close();
+					}
+				}
+				window.draw(endgame1);
+				endgame1.setPosition({ view.getCenter().x - 13,view.getCenter().y + 15 });
+				scorenew.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+				scorenewhighscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+				scorenewmenu.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+				scorenewexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+
+			}
+			window.draw(Score);
+			window.draw(ScorePoint);
+			window.draw(Time);
+			window.display();
+
+			//CheckCollision
+			platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform5.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform6.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform7.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform8.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform9.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform10.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform11.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform12.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform13.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform14.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform15.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform16.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform17.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform18.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform19.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform20.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform21.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform22.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform23.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform24.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform25.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform26.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform27.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform28.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform29.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform30.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform31.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform32.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform33.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform34.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform35.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform36.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform37.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform38.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform39.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform40.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform41.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform42.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform43.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform44.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform45.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform46.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform47.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform48.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform49.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform50.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform51.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform52.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform53.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform54.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform55.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform56.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform57.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform58.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform59.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform60.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform61.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform62.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform63.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform64.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform65.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform66.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform67.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform68.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform69.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform70.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform71.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform72.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform73.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform74.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform75.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform76.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform77.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform79.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform80.GetCollision().CheckCollision(playerCollision, 1.0f);
+			//platform81.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform82.GetCollision().CheckCollision(playerCollision, 1.0f);
+			//platform83.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform84.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform85.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform86.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform87.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform88.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform89.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform90.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform91.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform92.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform93.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform94.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform95.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform96.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
+			platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
 		}
-		window.draw(Score);
-		window.draw(ScorePoint);
-		window.draw(Time);
-		window.display();
-
-		//CheckCollision
-		platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform3.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform4.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform5.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform6.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform7.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform8.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform9.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform10.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform11.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform12.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform13.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform14.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform15.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform16.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform17.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform18.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform19.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform20.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform21.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform22.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform23.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform24.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform25.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform26.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform27.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform28.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform29.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform30.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform31.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform32.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform33.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform34.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform35.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform36.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform37.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform38.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform39.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform40.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform41.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform42.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform43.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform44.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform45.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform46.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform47.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform48.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform49.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform50.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform51.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform52.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform53.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform54.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform55.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform56.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform57.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform58.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform59.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform60.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform61.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform62.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform63.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform64.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform65.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform66.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform67.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform68.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform69.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform70.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform71.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform72.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform73.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform74.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform75.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform76.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform77.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform79.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform80.GetCollision().CheckCollision(playerCollision, 1.0f);
-		//platform81.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform82.GetCollision().CheckCollision(playerCollision, 1.0f);
-		//platform83.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform84.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform85.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform86.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform87.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform88.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform89.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform90.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform91.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform92.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform93.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform94.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform95.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform96.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
-		platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
-
 	}
 	return 0;
 }
