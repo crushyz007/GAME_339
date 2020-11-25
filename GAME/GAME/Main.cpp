@@ -21,7 +21,7 @@ int bulletDirection;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "POKEMON GO!", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "POKEMON FAIRYTALE", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1080, 720));
 
 	//ash
@@ -111,6 +111,7 @@ int main()
 
 	//----------------------------------------------------Menu-----------------------------------------------------
 	bool menu = true;
+	bool howto = false;
 	bool start = false;
 	sf::RectangleShape menufinal(sf::Vector2f(1080.0f, 720.0f));
 	sf::Texture menu1;
@@ -137,7 +138,18 @@ int main()
 	menuhowto1.loadFromFile("texture/menuhowto.png");
 	menuhowto.setTexture(&menuhowto1);
 
+	sf::RectangleShape howtoplay(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture howto1;
+	howto1.loadFromFile("texture/howto.png");
+	howtoplay.setTexture(&howto1);
+
+	sf::RectangleShape howtoplay2(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture howto2;
+	howto2.loadFromFile("texture/howtoback.png");
+	howtoplay2.setTexture(&howto2);
+
 	int animationFrame = 0;
+
 
 	//Platform
 	Collision playerCollision = player.GetCollision(); // (w,l)block,(w,l)move,address
@@ -501,6 +513,10 @@ int main()
 			{
 				//howtoplay
 				window.draw(menuhowto);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					howto = true;
+				}
 			}
 			if (sf::Mouse::getPosition(window).x >= 877 && sf::Mouse::getPosition(window).y >= 257 && sf::Mouse::getPosition(window).x <= 1025 && sf::Mouse::getPosition(window).y <= 307)
 			{
@@ -511,6 +527,20 @@ int main()
 					window.close();
 				}
 			}
+			if (howto == true)
+			{
+				window.draw(howtoplay);
+				if (sf::Mouse::getPosition(window).x >= 879 && sf::Mouse::getPosition(window).y >= 84 && sf::Mouse::getPosition(window).x <= 989 && sf::Mouse::getPosition(window).y <= 120)
+				{
+					window.draw(howtoplay2);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+
+						howto = false;
+					}
+				}
+			}
+
 			window.display();
 
 		}
