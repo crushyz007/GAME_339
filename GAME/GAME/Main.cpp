@@ -26,11 +26,11 @@ int main()
 
 	//ash
 	sf::Texture playerTexture;
-	playerTexture.loadFromFile("texture/ash1.png");
+	playerTexture.loadFromFile("texture/newash.png");
 	sf::Sprite playerSprite;
 	//playerSprite.scale(4.0f, 4.0f);
 
-	Player player(&playerTexture, sf::Vector2u(5, 4), 0.2f, 180.0f);
+	Player player(&playerTexture, sf::Vector2u(3, 4), 0.2f, 180.0f);
 
 	//map1
 	sf::RectangleShape bg(sf::Vector2f(2280.0f, 1920.0f));
