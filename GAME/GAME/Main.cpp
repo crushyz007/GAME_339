@@ -115,7 +115,9 @@ int main()
 	bool start = false;
 	bool board1 = false;
 	bool play = false;
+	bool scoreboard = false;
 	sf::Clock NewClock;
+	sf::Clock NewieClock;
 
 	//-------new------------
 	sf::Font font555;
@@ -569,7 +571,9 @@ int main()
 				window.draw(menuscore);
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					board1 = true;
+					scoreboard = true;
+					menu = false;
+					start = false;
 				}
 			}
 			if (sf::Mouse::getPosition(window).x >= 1003 && sf::Mouse::getPosition(window).y >= 58 && sf::Mouse::getPosition(window).x <= 1034 && sf::Mouse::getPosition(window).y <= 95)
@@ -604,22 +608,76 @@ int main()
 				}
 			}
 
-			if (board1 == true)
+			window.display();
+		}
+		//
+		while (scoreboard == true)
+		{
+			sf::Event event;
+			while (window.pollEvent(event))
 			{
-				window.draw(leaderboard);
-				if (sf::Mouse::getPosition(window).x >= 879 && sf::Mouse::getPosition(window).y >= 84 && sf::Mouse::getPosition(window).x <= 989 && sf::Mouse::getPosition(window).y <= 120)
+				switch (event.type)
 				{
-					window.draw(leaderboard2);
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
+				case sf::Event::Closed:
+					window.close();
+					break;
+				}
+			}
+			if (scoreboard == 0)
+			{
+				view.setCenter(540, 360);
+			}
 
-						board1 = false;
-					}
+			sf::Vector2f mouesPosition = sf::Vector2f(0.0f, 0.0f);
+			mouesPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			std::cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << std::endl;
+			window.clear();
+			window.draw(menufinal);
+			window.draw(leaderboard);
+			if (sf::Mouse::getPosition(window).x >= 879 && sf::Mouse::getPosition(window).y >= 84 && sf::Mouse::getPosition(window).x <= 989 && sf::Mouse::getPosition(window).y <= 120)
+			{
+				window.draw(leaderboard2);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					scorename = false;
+					scoreboard = false;
+					menu = true;
+					NewieClock.restart();
+				}
+			}
+			sf::Text text1("", font555);
+			text1.setCharacterSize(45);
+			text1.setFillColor(sf::Color::White);
+			fileReader.open("texture/leaderbordScore.txt");
+			do
+			{
+				fileReader >> word;
+				std::string first_token = word.substr(0, word.find(','));
+				int second_token = std::stoi(word.substr(word.find(',') + 1, word.length()));
+				keepscore[second_token] = first_token;
+			} while (fileReader.good());
+			fileReader.close();
+			std::map<int, std::string>::iterator end = keepscore.end();
+			std::map<int, std::string>::iterator beg = keepscore.begin();
+			end--;
+			beg--;
+			int currentDisplay = 0;
+			for (std::map<int, std::string>::iterator it = end; it != beg; it--) {
+				text1.setString(it->second);//name
+				text1.setPosition(view.getCenter().x + 250, 200 + 80 * currentDisplay);
+				window.draw(text1);
+				text1.setString(std::to_string(it->first)); //score
+				text1.setPosition(view.getCenter().x + 720, 200 + 80 * currentDisplay);
+				window.draw(text1);
+				currentDisplay++;
+				if (currentDisplay == 5)
+				{
+					break;
 				}
 			}
 			window.display();
 		}
-
+		//
 		//
 		while (scorename == true) {
 
@@ -679,6 +737,7 @@ int main()
 				window.draw(load);
 				if (NewClock.getElapsedTime().asSeconds() > 0.8)
 				{
+					scoreboard = false;
 					board1 = false;
 					menu = false;
 					scorename = false;
@@ -687,6 +746,7 @@ int main()
 			}
 			window.display();
 		}
+
 
 		//
 		while (start == true) {
@@ -1218,11 +1278,11 @@ int main()
 				if (sf::Mouse::getPosition(window).x >= 487 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 617 && sf::Mouse::getPosition(window).y <= 515)
 				{
 					window.draw(scorenewmenu);
-					/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						menu = true;
-						start = false;
-					}*/
+						//menu = true;
+						//start = false;
+					}
 				}
 				if (sf::Mouse::getPosition(window).x >= 628 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 663 && sf::Mouse::getPosition(window).y <= 515)
 				{
