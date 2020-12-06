@@ -113,6 +113,44 @@ int main()
 	bool menu = true;
 	bool howto = false;
 	bool start = false;
+	bool board1 = false;
+	bool play = false;
+	sf::Clock NewClock;
+
+	//-------new------------
+	sf::Font font555;
+	font555.loadFromFile("texture/PokemonFont.ttf");
+
+	bool scorename = false;
+	int countboard = 0;
+	sf::String playerInput;
+	std::ofstream fileWriter;
+	std::ostringstream keyname;
+	sf::Text Keyname;
+	Keyname.setCharacterSize(40);
+	Keyname.setString(" ");
+	Keyname.setFont(font555);
+	Keyname.setFillColor(sf::Color::White);
+	char last_char = ' ';
+	sf::RectangleShape cursor;
+	cursor.setSize(sf::Vector2f(5.0f, 30.0f));
+	cursor.setOrigin(sf::Vector2f(2.5f, 15.0f));
+	cursor.setFillColor(sf::Color::Black);
+	sf::Text text("", font555);
+	Keyname.setPosition(300, 500);
+	text.setFillColor(sf::Color::Black);
+	text.setPosition(460, 230);
+	cursor.setPosition(465.0f + text.getGlobalBounds().width + 10, 250.0f);
+	float totalTime_cursor = 0;
+	sf::Clock clock_cursor;
+	bool state_cursor = false;
+	std::string user_name = "";
+	fstream myFile;
+	std::map<int, std::string> keepscore;
+	std::ifstream fileReader;
+	std::string word;
+	//---------new---------------
+
 	sf::RectangleShape menufinal(sf::Vector2f(1080.0f, 720.0f));
 	sf::Texture menu1;
 	menu1.loadFromFile("texture/menufinalize.png");
@@ -147,6 +185,26 @@ int main()
 	sf::Texture howto2;
 	howto2.loadFromFile("texture/howtoback.png");
 	howtoplay2.setTexture(&howto2);
+
+	sf::RectangleShape leaderboard(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture board;
+	board.loadFromFile("texture/leaderboard.png");
+	leaderboard.setTexture(&board);
+
+	sf::RectangleShape leaderboard2(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture board2;
+	board2.loadFromFile("texture/leaderboardback.png");
+	leaderboard2.setTexture(&board2);
+
+	sf::RectangleShape entername(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture name1;
+	name1.loadFromFile("texture/namenew.png");
+	entername.setTexture(&name1);
+
+	sf::RectangleShape load(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture loading;
+	loading.loadFromFile("texture/loading.png");
+	load.setTexture(&loading);
 
 	int animationFrame = 0;
 
@@ -501,13 +559,18 @@ int main()
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					menu = false;
-					start = true;
+					scorename = true;
+					//start = true;
 				}
 			}
 			if (sf::Mouse::getPosition(window).x >= 738 && sf::Mouse::getPosition(window).y >= 338 && sf::Mouse::getPosition(window).x <= 919 && sf::Mouse::getPosition(window).y <= 376)
 			{
 				//leaderboard
 				window.draw(menuscore);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+					board1 = true;
+				}
 			}
 			if (sf::Mouse::getPosition(window).x >= 1003 && sf::Mouse::getPosition(window).y >= 58 && sf::Mouse::getPosition(window).x <= 1034 && sf::Mouse::getPosition(window).y <= 95)
 			{
@@ -541,9 +604,91 @@ int main()
 				}
 			}
 
-			window.display();
+			if (board1 == true)
+			{
+				window.draw(leaderboard);
+				if (sf::Mouse::getPosition(window).x >= 879 && sf::Mouse::getPosition(window).y >= 84 && sf::Mouse::getPosition(window).x <= 989 && sf::Mouse::getPosition(window).y <= 120)
+				{
+					window.draw(leaderboard2);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
 
+						board1 = false;
+					}
+				}
+			}
+			window.display();
 		}
+
+		//
+		while (scorename == true) {
+
+			countboard += deltaTime;
+			sf::Event event;
+			while (window.pollEvent(event)) {
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					window.close();
+					break;
+				}
+			}
+
+			if (event.type == sf::Event::TextEntered && last_char != event.text.unicode)
+			{
+				if (event.text.unicode == 13) { //enter
+					user_name = playerInput;
+					playerInput.clear();
+					menu = true;
+				}
+				else if (event.text.unicode == 8 && playerInput.getSize() >= 0) { // backspace delete
+					playerInput = playerInput.substring(0, playerInput.getSize() - 1);
+				}
+				else {
+					if (playerInput.getSize() < 15) {
+						playerInput += event.text.unicode;
+						countboard = 0;
+					}
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					play = true;
+					NewClock.restart();
+				}
+				last_char = event.text.unicode;
+				text.setString(playerInput);
+				cursor.setPosition(465.0f + text.getGlobalBounds().width + 10, 250.0f);
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased && last_char != ' ') {
+				last_char = ' ';
+			}
+			window.clear();
+			window.draw(entername);
+			window.draw(Keyname);
+
+			totalTime_cursor += clock_cursor.restart().asSeconds();
+			if (totalTime_cursor >= 0.5) {
+				totalTime_cursor = 0;
+				state_cursor = !state_cursor;
+			}
+			if (state_cursor == true) {
+				window.draw(cursor);
+			}
+			window.draw(text);
+			if (play == true)
+			{
+				window.draw(load);
+				if (NewClock.getElapsedTime().asSeconds() > 0.8)
+				{
+					board1 = false;
+					menu = false;
+					scorename = false;
+					start = true;
+				}
+			}
+			window.display();
+		}
+
+		//
 		while (start == true) {
 
 			timer1.str(" ");
