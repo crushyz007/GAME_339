@@ -118,6 +118,7 @@ int main()
 	bool scoreboard = false;
 	sf::Clock NewClock;
 	sf::Clock NewieClock;
+	int first=0;
 
 	//-------new------------
 	sf::Font font555;
@@ -426,7 +427,7 @@ int main()
 	ScorePoint.setFillColor(sf::Color::White);
 
 	//Timer
-	int countClock = 20;
+	int countClock = 5;
 	sf::Clock Clock1;
 	sf::Font font2;
 	font2.loadFromFile("texture/PokemonFont.ttf");
@@ -562,7 +563,6 @@ int main()
 				{
 					menu = false;
 					scorename = true;
-					//start = true;
 				}
 			}
 			if (sf::Mouse::getPosition(window).x >= 738 && sf::Mouse::getPosition(window).y >= 338 && sf::Mouse::getPosition(window).x <= 919 && sf::Mouse::getPosition(window).y <= 376)
@@ -592,6 +592,7 @@ int main()
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					window.close();
+					break;
 				}
 			}
 			if (howto == true)
@@ -623,9 +624,9 @@ int main()
 					break;
 				}
 			}
-			if (scoreboard == 0)
+			if (first == 0)
 			{
-				view.setCenter(540, 360);
+			view.setCenter(540, 360);
 			}
 
 			sf::Vector2f mouesPosition = sf::Vector2f(0.0f, 0.0f);
@@ -664,10 +665,10 @@ int main()
 			int currentDisplay = 0;
 			for (std::map<int, std::string>::iterator it = end; it != beg; it--) {
 				text1.setString(it->second);//name
-				text1.setPosition(view.getCenter().x + 250, 200 + 80 * currentDisplay);
+				text1.setPosition(view.getCenter().x - 250, view.getCenter().y-160+80*currentDisplay);
 				window.draw(text1);
 				text1.setString(std::to_string(it->first)); //score
-				text1.setPosition(view.getCenter().x + 720, 200 + 80 * currentDisplay);
+				text1.setPosition(view.getCenter().x + 200, view.getCenter().y-160+80*currentDisplay);
 				window.draw(text1);
 				currentDisplay++;
 				if (currentDisplay == 5)
@@ -1280,8 +1281,42 @@ int main()
 					window.draw(scorenewmenu);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						//menu = true;
-						//start = false;
+						vector<pair<int, string> > score;
+					string temp, tempString;
+					int tempInt = 0, X = 1;
+
+					while (window.pollEvent(event))
+					{
+						if (event.type == sf::Event::Closed)
+						window.close();
+						fileWriter.open("texture/leaderbordScore.txt", std::ios::out | std::ios::app);
+						fileWriter << "\n" << user_name << "," <<countpointpokemon;
+						fileWriter.close();
+						playerInput.clear();
+					}
+					myFile.close();
+					
+					menu = true;
+					start = false;
+					scoreboard = false;
+					menufinal.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					menuplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					menuscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					menuexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					menuhowto.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					howtoplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					howtoplay2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					leaderboard.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					leaderboard2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					entername.setPosition({ view.getCenter().x - 540, view.getCenter().y - 360 });
+					load.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+
+					last_char = event.text.unicode;
+					text.setString(playerInput);
+					cursor.setPosition(view.getCenter().x + 5 + text.getGlobalBounds().width + 10, 250.0f);
+					Keyname.setPosition(view.getCenter().x - 240, 500);
+					text.setPosition(view.getCenter().x - 15, 535.0f);
+
 					}
 				}
 				if (sf::Mouse::getPosition(window).x >= 628 && sf::Mouse::getPosition(window).y >= 479 && sf::Mouse::getPosition(window).x <= 663 && sf::Mouse::getPosition(window).y <= 515)
@@ -1404,6 +1439,9 @@ int main()
 			platform97.GetCollision().CheckCollision(playerCollision, 1.0f);
 			platform98.GetCollision().CheckCollision(playerCollision, 1.0f);
 		}
+		first++;
+		endgame = false;
+		//start = false;
 	}
 	return 0;
 }
