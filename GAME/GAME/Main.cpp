@@ -210,6 +210,26 @@ int main()
 	loading.loadFromFile("texture/loading.png");
 	load.setTexture(&loading);
 
+	sf::RectangleShape resume(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture resume1;
+	resume1.loadFromFile("texture/pauseresume.png");
+	resume.setTexture(&resume1);
+
+	sf::RectangleShape pauseexit(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture exit1;
+	exit1.loadFromFile("texture/pauseexit.png");
+	pauseexit.setTexture(&exit1);
+
+	sf::RectangleShape pausemenu(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture pausemenu1;
+	pausemenu1.loadFromFile("texture/pausemenu.png");
+	pausemenu.setTexture(&pausemenu1);
+
+	sf::RectangleShape pausefinal(sf::Vector2f(1080.0f, 720.0f));
+	sf::Texture pausefinal1;
+	pausefinal1.loadFromFile("texture/pausefinal.png");
+	pausefinal.setTexture(&pausefinal1);
+
 	int animationFrame = 0;
 
 
@@ -431,6 +451,7 @@ int main()
 	//Timer
 	int countClock = 20;
 	sf::Clock Clock1;
+	sf::Clock Clock2;
 	sf::Font font2;
 	font2.loadFromFile("texture/PokemonFont.ttf");
 	std::ostringstream timer1;
@@ -564,6 +585,9 @@ int main()
 
 	//Time
 	bool checkMap = false;
+	
+	//pause
+	bool pause = false;
 
 	int u = 0;
 
@@ -662,7 +686,7 @@ int main()
 			}
 			if (first == 0)
 			{
-			view.setCenter(540, 360);
+				view.setCenter(540, 360);
 			}
 
 			sf::Vector2f mouesPosition = sf::Vector2f(0.0f, 0.0f);
@@ -701,10 +725,10 @@ int main()
 			int currentDisplay = 0;
 			for (std::map<int, std::string>::iterator it = end; it != beg; it--) {
 				text1.setString(it->second);//name
-				text1.setPosition(view.getCenter().x - 250, view.getCenter().y-160+80*currentDisplay);
+				text1.setPosition(view.getCenter().x - 250, view.getCenter().y - 160 + 80 * currentDisplay);
 				window.draw(text1);
 				text1.setString(std::to_string(it->first)); //score
-				text1.setPosition(view.getCenter().x + 200, view.getCenter().y-160+80*currentDisplay);
+				text1.setPosition(view.getCenter().x + 200, view.getCenter().y - 160 + 80 * currentDisplay);
 				window.draw(text1);
 				currentDisplay++;
 				if (currentDisplay == 5)
@@ -714,7 +738,6 @@ int main()
 			}
 			window.display();
 		}
-		//
 		//
 		while (scorename == true) {
 
@@ -745,8 +768,11 @@ int main()
 						countboard = 0;
 					}
 				}
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) 
+				{
 					play = true;
+					scoreboard = false;
+					menu = false;
 					NewClock.restart();
 				}
 				last_char = event.text.unicode;
@@ -779,15 +805,20 @@ int main()
 					menu = false;
 					scorename = false;
 					start = true;
+					play = false;
 				}
 			}
 			window.display();
 		}
 
-
 		//
-		while (start == true) {
-
+		while (start == true)
+		{
+			//exit
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+			{
+				window.close();
+			}
 			timer1.str(" ");
 			int count = player.GetPosition().x;
 			if (checkMap == false)
@@ -803,6 +834,7 @@ int main()
 					endgame = true;
 				}
 			}
+
 
 			deltaTime = clock.restart().asSeconds();
 			sf::Vector2f pos = player.GetPosition();
@@ -823,9 +855,16 @@ int main()
 					break;
 				}
 			}
-			if (endgame == false) {
-				player.Update(deltaTime);
+			if (pause == false)
+			{
+				if (endgame == false)
+				{
+					player.Update(deltaTime);
+				}
 			}
+			
+				
+			
 			view.setCenter(player.GetPosition());
 			if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
 			{
@@ -1104,27 +1143,27 @@ int main()
 			//Timer
 			Time.setString(timer1.str());
 			Time.setPosition({ view.getCenter().x + 40 ,view.getCenter().y - 335 });
+			if (pause == false) {
+				//Update Item
+				for (int i = 0; i < itemVector.size(); i++)
+				{
+					itemVector[i].update(deltaTime, player);
+				}
 
-			//Update Item
-			for (int i = 0; i < itemVector.size(); i++)
-			{
-				itemVector[i].update(deltaTime, player);
+				//Update Enemy
+				for (int i = 0; i < EnemyVector.size(); i++)
+				{
+					EnemyVector[i].update(deltaTime);
+				}
+				for (int i = 0; i < EnemyVector1.size(); i++)
+				{
+					EnemyVector1[i].update1(deltaTime);
+				}
+				for (int i = 0; i < PokemonVector1.size(); i++)
+				{
+					PokemonVector1[i].update1(deltaTime);
+				}
 			}
-
-			//Update Enemy
-			for (int i = 0; i < EnemyVector.size(); i++)
-			{
-				EnemyVector[i].update(deltaTime);
-			}
-			for (int i = 0; i < EnemyVector1.size(); i++)
-			{
-				EnemyVector1[i].update1(deltaTime);
-			}
-			for (int i = 0; i < PokemonVector1.size(); i++)
-			{
-				PokemonVector1[i].update1(deltaTime);
-			}
-
 			//Update Pokemon
 			if (endgame == false) {
 				for (int i = 0; i < PokemonVector.size(); i++)
@@ -1318,40 +1357,40 @@ int main()
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
 						vector<pair<int, string> > score;
-					string temp, tempString;
-					int tempInt = 0, X = 1;
+						string temp, tempString;
+						int tempInt = 0, X = 1;
 
-					while (window.pollEvent(event))
-					{
-						if (event.type == sf::Event::Closed)
-						window.close();
-						fileWriter.open("texture/leaderbordScore.txt", std::ios::out | std::ios::app);
-						fileWriter << "\n" << user_name << "," <<countpointpokemon;
-						fileWriter.close();
-						playerInput.clear();
-					}
-					myFile.close();
-					
-					menu = true;
-					start = false;
-					scoreboard = false;
-					menufinal.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					menuplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					menuscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					menuexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					menuhowto.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					howtoplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					howtoplay2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					leaderboard.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					leaderboard2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
-					entername.setPosition({ view.getCenter().x - 540, view.getCenter().y - 360 });
-					load.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						while (window.pollEvent(event))
+						{
+							if (event.type == sf::Event::Closed)
+								window.close();
+							fileWriter.open("texture/leaderbordScore.txt", std::ios::out | std::ios::app);
+							fileWriter << "\n" << user_name << "," << countpointpokemon;
+							fileWriter.close();
+							playerInput.clear();
+						}
+						myFile.close();
 
-					last_char = event.text.unicode;
-					text.setString(playerInput);
-					cursor.setPosition(view.getCenter().x + 5 + text.getGlobalBounds().width + 10, 250.0f);
-					Keyname.setPosition(view.getCenter().x - 240, 500);
-					text.setPosition(view.getCenter().x - 15, 535.0f);
+						menu = true;
+						start = false;
+						scoreboard = false;
+						menufinal.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuhowto.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						howtoplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						howtoplay2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						leaderboard.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						leaderboard2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						entername.setPosition({ view.getCenter().x - 540, view.getCenter().y - 360 });
+						load.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+
+						last_char = event.text.unicode;
+						text.setString(playerInput);
+						cursor.setPosition(view.getCenter().x + 5 + text.getGlobalBounds().width + 10, 250.0f);
+						Keyname.setPosition(view.getCenter().x - 240, 500);
+						text.setPosition(view.getCenter().x - 15, 535.0f);
 
 					}
 				}
@@ -1371,6 +1410,84 @@ int main()
 				scorenewexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
 
 			}
+
+			//pause
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				pause = true;
+			}
+			if (pause == true)
+			{
+				pausefinal.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+				window.draw(pausefinal);
+				if (sf::Mouse::getPosition(window).x >= 462 && sf::Mouse::getPosition(window).y >= 199 && sf::Mouse::getPosition(window).x <= 616 && sf::Mouse::getPosition(window).y <= 235)
+				{
+					//resume
+					resume.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					window.draw(resume);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						pause = false;
+					}
+				}
+				if (sf::Mouse::getPosition(window).x >= 469 && sf::Mouse::getPosition(window).y >= 334 && sf::Mouse::getPosition(window).x <= 565 && sf::Mouse::getPosition(window).y <= 380)
+				{
+					//menu
+					pausemenu.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					window.draw(pausemenu);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						vector<pair<int, string> > score;
+						string temp, tempString;
+						int tempInt = 0, X = 1;
+
+						while (window.pollEvent(event))
+						{
+							if (event.type == sf::Event::Closed)
+								window.close();
+							fileWriter.open("texture/leaderbordScore.txt", std::ios::out | std::ios::app);
+							fileWriter << "\n" << user_name << "," << countpointpokemon;
+							fileWriter.close();
+							playerInput.clear();
+						}
+						myFile.close();
+
+						menu = true;
+						start = false;
+						scoreboard = false;
+						menufinal.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuscore.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						menuhowto.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						howtoplay.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						howtoplay2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						leaderboard.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						leaderboard2.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+						entername.setPosition({ view.getCenter().x - 540, view.getCenter().y - 360 });
+						load.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+
+						last_char = event.text.unicode;
+						text.setString(playerInput);
+						cursor.setPosition(view.getCenter().x + 5 + text.getGlobalBounds().width + 10, 250.0f);
+						Keyname.setPosition(view.getCenter().x - 240, 500);
+						text.setPosition(view.getCenter().x - 15, 535.0f);
+
+					}
+				}
+				if (sf::Mouse::getPosition(window).x >= 474 && sf::Mouse::getPosition(window).y >= 471 && sf::Mouse::getPosition(window).x <= 538 && sf::Mouse::getPosition(window).y <= 518)
+				{
+					//exit
+					pauseexit.setPosition({ view.getCenter().x - 540,view.getCenter().y - 360 });
+					window.draw(pauseexit);
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+					{
+						window.close();
+					}
+				}
+
+			}
+
 			window.draw(Score);
 			window.draw(ScorePoint);
 			window.draw(Time);
@@ -1477,6 +1594,7 @@ int main()
 		}
 		first++;
 		endgame = false;
+		pause = false;
 		//start = false;
 	}
 	return 0;

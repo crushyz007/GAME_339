@@ -24,22 +24,22 @@ void Player::Update(float deltaTime)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        movement.x -= speed * deltaTime * 5;
+        movement.x -= speed * deltaTime * 6;
         faceDirection = 1;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        movement.x += speed * deltaTime * 5;
+        movement.x += speed * deltaTime * 6;
         faceDirection = 2;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        movement.y -= speed * deltaTime * 5;
+        movement.y -= speed * deltaTime * 6;
         faceDirection = 3;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        movement.y += speed * deltaTime * 5;
+        movement.y += speed * deltaTime * 6;
         faceDirection = 4;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
