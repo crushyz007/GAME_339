@@ -24,6 +24,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "POKEMON FAIRYTALE", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1080, 720));
 
+	srand(time(NULL));
 	//ash
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("texture/newash.png");
@@ -320,23 +321,24 @@ int main()
 	ITEM.loadFromFile("texture/pokebon.png");
 	std::vector <Item> itemVector;
 	//map1
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 305.0f, 1572.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 706.0f, 1540.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 988.0f, 1540.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1267.0f, 1540.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1343.0f, 1830.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 979.0f, 1830.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 925.0f, 950.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2048.0f, 670.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1170.0f, 385.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 869.0f, 505.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 780.0f, 505.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 675.0f, 505.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1807.0f, 240.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 577.0f, 240.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1494.0f, 1628.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2087.0f, 1628.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 1795.0f, 1550.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 431.0f, 1116.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 305.0f, 1572.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 706.0f, 1540.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 988.0f, 1540.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1267.0f, 1540.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1343.0f, 1830.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 979.0f, 1830.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 925.0f, 950.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 2048.0f, 670.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1170.0f, 385.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 869.0f, 505.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 780.0f, 505.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 675.0f, 505.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1807.0f, 240.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 577.0f, 240.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1494.0f, 1628.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 2087.0f, 1628.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, rand() % 50 + 1795.0f, 1550.0f));
 	//map2
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2964.0f, 830.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 2898.0f, 1350.0f));
@@ -427,7 +429,7 @@ int main()
 	ScorePoint.setFillColor(sf::Color::White);
 
 	//Timer
-	int countClock = 5;
+	int countClock = 20;
 	sf::Clock Clock1;
 	sf::Font font2;
 	font2.loadFromFile("texture/PokemonFont.ttf");
@@ -511,6 +513,17 @@ int main()
 	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 3698.0f, 2478.0f));
 	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 3797.0f, 2973.0f));
 	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 2901.0f, 2994.0f));
+	//new
+	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 3085.0f, 2625.0f));
+	PokemonVector.push_back(Pokemon(&metamon, sf::Vector2u(2, 1), 1.0f, 3314.0f, 2746.0f));
+	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 3637.0f, 2585.0f));
+	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 3900.0f, 2827.0f));
+	PokemonVector.push_back(Pokemon(&pikachu, sf::Vector2u(3, 1), 1.0f, 4388.0f, 3007.0f));
+	PokemonVector.push_back(Pokemon(&cabigon, sf::Vector2u(2, 1), 1.0f, 3937.0f, 2477.0f));
+	PokemonVector.push_back(Pokemon(&cabigon, sf::Vector2u(2, 1), 1.0f, 4031.0f, 3503.0f));
+	PokemonVector.push_back(Pokemon(&cabigon, sf::Vector2u(2, 1), 1.0f, 2727.0f, 3324.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 2300.0f, 3340.0f));
+	PokemonVector.push_back(Pokemon(&turtle, sf::Vector2u(2, 1), 0.08f, 2892.0f, 3700.0f));
 	//LEFT-RIGHT
 	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3953.0f, 2463.0f));
 	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3043.0f, 2486.0f));
@@ -519,11 +532,34 @@ int main()
 	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3511.0f, 2673.0f));
 	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 3730.0f, 3891.0f));
 	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2950.0f, 3660.0f));
+	//new
+	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 2968.0f, 3397.0f));
+	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3410.0f, 3483.0f));
+	PokemonVector3.push_back(Pokemon(&eevee, sf::Vector2u(2, 2), 0.08f, 3857.0f, 2790.0f));
+	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 3971.0f, 2857.0f));
+	PokemonVector3.push_back(Pokemon(&pink, sf::Vector2u(2, 2), 0.08f, 2792.0f, 2519.0f));
+	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3667.0f, 3053.0f));
+	PokemonVector3.push_back(Pokemon(&mew, sf::Vector2u(2, 2), 0.08f, 3153.0f, 2979.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 4272.0f, 3150.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2737.0f, 3665.0f));
+	PokemonVector3.push_back(Pokemon(&fish, sf::Vector2u(2, 2), 0.08f, 2924.0f, 3900.0f));
 	///UP-DOWN
 	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 2710.0f, 2993.0f));
 	PokemonVector2.push_back(Pokemon(&polliwog, sf::Vector2u(2, 2), 0.08f, 3510.0f, 2758.0f));
 	PokemonVector2.push_back(Pokemon(&draniti, sf::Vector2u(2, 2), 0.08f, 3992.0f, 2529.0f));
 	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 3986.0f, 3610.0f));
+	//new
+	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 3380.0f, 2329.0f));
+	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 3827.0f, 2453.0f));
+	PokemonVector2.push_back(Pokemon(&dragon, sf::Vector2u(3, 2), 0.08f, 4013.0f, 3273.0f));
+	PokemonVector2.push_back(Pokemon(&polliwog, sf::Vector2u(2, 2), 0.08f, 4206.0f, 2453.0f));
+	PokemonVector2.push_back(Pokemon(&polliwog, sf::Vector2u(2, 2), 0.08f, 3425.0f, 2790.0f));
+	PokemonVector2.push_back(Pokemon(&draniti, sf::Vector2u(2, 2), 0.08f, 3832.0f, 2665.0f));
+	PokemonVector2.push_back(Pokemon(&draniti, sf::Vector2u(2, 2), 0.08f, 3549.0f, 2802.0f));
+	PokemonVector2.push_back(Pokemon(&draniti, sf::Vector2u(2, 2), 0.08f, 3491.0f, 2453.0f));
+	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 3936.0f, 3756.0f));
+	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 4165.0f, 3471.0f));
+	PokemonVector2.push_back(Pokemon(&lapras, sf::Vector2u(2, 2), 0.08f, 2500.0f, 2924.0f));
 	///////////////////////----------------------------------/////////////////////////////////
 
 	//Time
